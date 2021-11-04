@@ -15,7 +15,7 @@ export default class App extends React.Component{
       invocador: "Eu cuido do caso",
       invocadorId: "",
       level: "0",
-      imgInvocador: "http://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/0.png",
+      imgInvocador: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/0.png",
       imgCampeao: "",
       imgMaestria: "",
       estadoDados: "none",
@@ -47,7 +47,7 @@ export default class App extends React.Component{
 
   getCampeao = () => {
 
-    axios.get('http://ddragon.leagueoflegends.com/cdn/11.22.1/data/en_US/champion.json')
+    axios.get('https://ddragon.leagueoflegends.com/cdn/11.22.1/data/en_US/champion.json')
     .then((response) => {
 
       const champs = response.data.data;
@@ -57,11 +57,10 @@ export default class App extends React.Component{
         if(String(champs[c].key) === this.state.champId){
           this.setState({
             champName: c,
-            imgCampeao: "http://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/" + c + ".png"
+            imgCampeao: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/" + c + ".png"
           })
           break;
         };
-
       }
     });
 
@@ -87,7 +86,7 @@ export default class App extends React.Component{
 
           level: response.data.summonerLevel,
 
-          imgInvocador: "http://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/" +
+          imgInvocador: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/" +
             response.data.profileIconId + ".png",
 
           invocadorId: response.data.id
@@ -103,7 +102,7 @@ export default class App extends React.Component{
           msgErro: "O jogador não existe!",
           estadoDados: "none",
           level: 0,
-          imgInvocador: "http://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/0.png"
+          imgInvocador: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/0.png"
           
         })
       }
@@ -130,7 +129,7 @@ export default class App extends React.Component{
         this.setState({
           estadoDados: "none",
           msgErro: "O jogador não possui maestrias",
-          imgInvocador: "http://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/0.png"
+          imgInvocador: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/0.png"
         });
       }
       
