@@ -1,16 +1,40 @@
+html{
+  background-color: #00051b;
+}
+
+h3, h2, h1, p, span {
+  color: rgb(214, 213, 213);
+}
+
+input{
+  width: 75%;
+  border-radius: 7px;
+  padding: 10px;
+  font-size: 15px;
+}
+
+button{
+  padding: 11px 20px;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+}
+
+button:hover{
+  cursor: pointer;
+}
+
 .component-app {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   align-items: center;
-  height: 100%;
   padding: 50px 0 50px 0;
   background-color: #00051b;
 }
 
 #content{
   width: 80%;
-  background-color: rgb(206, 201, 201);
+  background-color: #0000008a;
   text-align: center;
   border-radius: 9px;
   padding: 20px;
@@ -18,16 +42,19 @@
 
 input{
   margin-right: 15px;
+  border: none;
+  width: 80%;
 }
 
-#msgErro{
-  font-size: 15px;
-  color: red;
+#pErro{
+  font-size: 18px;
   font-weight: bold;
+  color: whiet !important;
 }
 
 #iconeChamp{
   display: inline-block;
+  width: 100px
 }
 
 #iconeMaestria{
@@ -41,10 +68,11 @@ input{
 
 #iconeInvocador{
   border-radius: 50px;
+  width: 130px;
 }
 
-#divSummoner{
-  margin-bottom: 20px;
+#nivelInvocadorText{
+  font-size: 18px;
 }
 
 #divMaestria{
@@ -53,5 +81,85 @@ input{
 }
 
 #divSummoner{
+  margin-right: 30px;
   float: right;
+}
+
+#left{
+  display: inline-block;
+  margin: auto;
+  width: 50%;
+}
+
+@media only screen and (max-width: 1736px) {
+  #content{
+    width: 75%;
+  }
+
+  input{
+    width: 100%;
+    margin-bottom: 40px;
+    margin: auto;
+    text-align: center;
+  }
+
+  button{
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    padding: 10px 20px;
+}
+
+}
+
+@media only screen and (max-width: 1040px) {
+
+  h3:first-child{
+    font-size: 20px;
+  }
+  .component-app{
+    padding: 30px 0 30px 0;
+  }
+
+  input{
+    width: 90%;
+    margin-bottom: 40px;
+    margin: auto;
+    text-align: center;
+  }
+
+  #left{
+    display: block;
+    width: 90%;
+  }
+
+  button{
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    padding: 10px 20px;
+  }
+
+  #divSummoner{
+    float: none;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    margin-right: 0;
+    text-align: center;
+    
+  }
+
+  #nivelInvocadorText{
+    font-size: 17px;
+  }
+}
+
+@media only screen and (max-width: 570px) {
+  #content{
+    width: 82%;
+  }
+
+  .component-app{
+    padding: 10px 0 10px 0
+  }
 }

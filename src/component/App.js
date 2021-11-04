@@ -2,13 +2,15 @@ import React from "react";
 import "./App.css";
 import axios from "axios";
 
+const api_key = "RGAPI-7cab5dd9-8d71-410c-8d9c-fe6f8235e646";
+
 export default class App extends React.Component{
 
   constructor(props){
     super(props);
 
     this.state = {
-      msgErro: "msg de erro",
+      msgErro: "",
       msgErroStatus: "block",
       invocador: "Eu cuido do caso",
       invocadorId: "",
@@ -69,7 +71,7 @@ export default class App extends React.Component{
     try {
       await axios.get('https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + nome, {
         params: {
-          'api_key': 'RGAPI-e067f75c-3ae1-4c19-9c87-62c3c824937b'
+          'api_key': api_key
         },
         headers: {
 
@@ -95,14 +97,23 @@ export default class App extends React.Component{
         this.getMaestrias();
 
       });
-    } catch (e) {console.log("das")}
+    } catch (e) {
+        console.clear();
+        this.setState({
+          msgErro: "O jogador não existe!",
+          estadoDados: "none",
+          level: 0,
+          imgInvocador: "http://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/0.png"
+          
+        })
+      }
   }
 
   getMaestrias = () => {
     axios.get('https://br1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/' 
     + this.state.invocadorId,{
       params:{
-        'api_key':'RGAPI-e067f75c-3ae1-4c19-9c87-62c3c824937b'
+        'api_key': api_key
     }}).then((response) => {
 
       try{
@@ -118,7 +129,8 @@ export default class App extends React.Component{
         console.log("erro ao pegar maestria")
         this.setState({
           estadoDados: "none",
-          msgErro: "O jogador não possui maestrias"
+          msgErro: "O jogador não possui maestrias",
+          imgInvocador: "http://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/0.png"
         });
       }
       
@@ -132,29 +144,29 @@ export default class App extends React.Component{
         
           <div id="divSummoner">
             <img id="iconeInvocador" alt="icone de invocador" src={this.state.imgInvocador} width="100px"></img>
-            <h3>Nível de invocador: {this.state.level}</h3>
+            <h3 id="nivelInvocadorText">Nível de invocador</h3>
+            <h1>{this.state.level}</h1>
           </div>
 
-          <span style={{fontSize: 15+"px", fontWeight: "bold"}}>Nome de invocador</span><br/><br/>
-          <input value={this.state.invocador} onChange={(event) => this.handleChange(event)}></input>
-          <button onClick={() => this.getDados(this.state.invocador)}>Pesquisar</button>
+          <div id="left">
+            <span style={{fontSize: 15+"px", fontWeight: "bold", marginBottom: "30px"}}>Nome de invocador</span><br/><br/>
+            <input value={this.state.invocador} onChange={(event) => this.handleChange(event)}></input>
+            <button onClick={() => this.getDados(this.state.invocador)}>Pesquisar</button>
 
-          <div id="msgErro" style={{display: this.state.msgErroStatus}}>
-            <p>{this.state.msgErro}</p>
-          </div>
-
-          <hr/>
-
-          <div id="divMaestria" style={{display:this.state.estadoDados}}>
-            <h2>Campeão mais jogado</h2>
-            <h3>{this.state.champName}</h3>
-            <img id="iconeChamp" alt="icone de campeao" src={this.state.imgCampeao} width="100px"></img>
-            <div id="maestria">
-              <img id="iconeMaestria" alt="maestria" src={this.state.imgMaestria} width="100px"></img>
-              <h3>Maestria {this.state.champLevel}</h3>
-              <h3>Pontos {this.state.qtdMaestria}</h3>
+            <div id="msgErro" style={{display: this.state.msgErroStatus}}>
+              <p id="pErro">{this.state.msgErro}</p>
             </div>
 
+            <div id="divMaestria" style={{display:this.state.estadoDados}}>
+              <h2 style={{marginBottom: "30px"}}>Campeão mais jogado</h2>
+              <h2>{this.state.champName}</h2>
+              <img id="iconeChamp" alt="icone de campeao" src={this.state.imgCampeao}></img>
+              <div id="maestria">
+                <img id="iconeMaestria" alt="maestria" src={this.state.imgMaestria}></img>
+                <h3>Maestria {this.state.champLevel}</h3>
+                <h3 style={{fontWeight:"bold"}}>Pontos {this.state.qtdMaestria}</h3>
+              </div>
+            </div>
           </div>
 
         </div>
