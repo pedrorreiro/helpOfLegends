@@ -14,7 +14,7 @@ input{
 }
 
 button{
-  color: orangered;
+  background-color: white;
   padding: 11px 20px;
   border-radius: 8px;
   border: none;

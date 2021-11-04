@@ -150,7 +150,7 @@ export default class App extends React.Component{
           <div id="left">
             <span style={{fontSize: 15+"px", fontWeight: "bold", marginBottom: "30px"}}>Nome de invocador</span><br/><br/>
             <input value={this.state.invocador} onChange={(event) => this.handleChange(event)}></input>
-            <button onClick={() => this.getDados(this.state.invocador)}>Pesquisar</button>
+            <button onClick={() => this.getDados(this.state.invocador)}>Buscar</button>
 
             <div id="msgErro" style={{display: this.state.msgErroStatus}}>
               <p id="pErro">{this.state.msgErro}</p>
