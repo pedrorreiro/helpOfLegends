@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/helpOfLegends/static/css/main.54fe443b.chunk.css",
-    "main.js": "/helpOfLegends/static/js/main.4e523592.chunk.js",
-    "main.js.map": "/helpOfLegends/static/js/main.4e523592.chunk.js.map",
+    "main.js": "/helpOfLegends/static/js/main.8b68fc8d.chunk.js",
+    "main.js.map": "/helpOfLegends/static/js/main.8b68fc8d.chunk.js.map",
     "runtime~main.js": "/helpOfLegends/static/js/runtime~main.22d0bb49.js",
     "runtime~main.js.map": "/helpOfLegends/static/js/runtime~main.22d0bb49.js.map",
     "static/js/2.0ea305f1.chunk.js": "/helpOfLegends/static/js/2.0ea305f1.chunk.js",
     "static/js/2.0ea305f1.chunk.js.map": "/helpOfLegends/static/js/2.0ea305f1.chunk.js.map",
     "index.html": "/helpOfLegends/index.html",
-    "precache-manifest.2aec2348f77ff486e37a5478355f6b76.js": "/helpOfLegends/precache-manifest.2aec2348f77ff486e37a5478355f6b76.js",
+    "precache-manifest.b65af13558f948acaff0fc44b79ecb4a.js": "/helpOfLegends/precache-manifest.b65af13558f948acaff0fc44b79ecb4a.js",
     "service-worker.js": "/helpOfLegends/service-worker.js",
     "static/css/main.54fe443b.chunk.css.map": "/helpOfLegends/static/css/main.54fe443b.chunk.css.map"
   }
