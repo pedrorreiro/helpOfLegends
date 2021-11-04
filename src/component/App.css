@@ -1,0 +1,57 @@
+.component-app {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 100%;
+  padding: 50px 0 50px 0;
+  background-color: #00051b;
+}
+
+#content{
+  width: 80%;
+  background-color: rgb(206, 201, 201);
+  text-align: center;
+  border-radius: 9px;
+  padding: 20px;
+}
+
+input{
+  margin-right: 15px;
+}
+
+#msgErro{
+  font-size: 15px;
+  color: red;
+  font-weight: bold;
+}
+
+#iconeChamp{
+  display: inline-block;
+}
+
+#iconeMaestria{
+  width: 50px;
+}
+
+#maestria{
+  display: inline-block;
+  margin-left: 15px;
+}
+
+#iconeInvocador{
+  border-radius: 50px;
+}
+
+#divSummoner{
+  margin-bottom: 20px;
+}
+
+#divMaestria{
+  text-align: center;
+  display: inline;
+}
+
+#divSummoner{
+  float: right;
+}
