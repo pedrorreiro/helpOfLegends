@@ -4147,6 +4147,15 @@
     "jsonfile" "^4.0.0"
     "universalify" "^0.1.0"
 
+"fs-extra@^8.1.0":
+  "integrity" "sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g=="
+  "resolved" "https://registry.npmjs.org/fs-extra/-/fs-extra-8.1.0.tgz"
+  "version" "8.1.0"
+  dependencies:
+    "graceful-fs" "^4.2.0"
+    "jsonfile" "^4.0.0"
+    "universalify" "^0.1.0"
+
 "fs-write-stream-atomic@^1.0.8":
   "integrity" "sha1-tH31NJPvkR33VzHnCp3tAYnbQMk="
   "resolved" "https://registry.npmjs.org/fs-write-stream-atomic/-/fs-write-stream-atomic-1.0.10.tgz"
@@ -4206,24 +4215,17 @@
   dependencies:
     "assert-plus" "^1.0.0"
 
-"gh-pages@^2.0.1":
-  "integrity" "sha512-uFlk3bukljeiWKQ2XvPfjcSi/ou7IfoDf2p+Fj672saLAr8bnOdFVqI/JSgrSgInKpCg5BksxEwGUl++dbg8Dg=="
-  "resolved" "https://registry.npmjs.org/gh-pages/-/gh-pages-2.0.1.tgz"
-  "version" "2.0.1"
+"gh-pages@^2.2.0":
+  "integrity" "sha512-c+yPkNOPMFGNisYg9r4qvsMIjVYikJv7ImFOhPIVPt0+AcRUamZ7zkGRLHz7FKB0xrlZ+ddSOJsZv9XAFVXLmA=="
+  "resolved" "https://registry.npmjs.org/gh-pages/-/gh-pages-2.2.0.tgz"
+  "version" "2.2.0"
   dependencies:
     "async" "^2.6.1"
     "commander" "^2.18.0"
     "email-addresses" "^3.0.1"
     "filenamify-url" "^1.0.0"
-    "fs-extra" "^7.0.0"
+    "fs-extra" "^8.1.0"
     "globby" "^6.1.0"
-    "graceful-fs" "^4.1.11"
-    "rimraf" "^2.6.2"
-
-"github-fork-ribbon-css@^0.2.1":
-  "integrity" "sha1-e0HC0xCcAiXq42MTLduxJ7YYbqI="
-  "resolved" "https://registry.npmjs.org/github-fork-ribbon-css/-/github-fork-ribbon-css-0.2.1.tgz"
-  "version" "0.2.1"
 
 "glob-parent@^3.1.0":
   "integrity" "sha1-nmr2KZ2NO9K9QEMIMr0RPfkGxa4="
@@ -4295,10 +4297,10 @@
     "pify" "^3.0.0"
     "slash" "^1.0.0"
 
-"graceful-fs@^4.1.11", "graceful-fs@^4.1.15", "graceful-fs@^4.1.2", "graceful-fs@^4.1.6":
-  "integrity" "sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA=="
-  "resolved" "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.1.15.tgz"
-  "version" "4.1.15"
+"graceful-fs@^4.1.11", "graceful-fs@^4.1.15", "graceful-fs@^4.1.2", "graceful-fs@^4.1.6", "graceful-fs@^4.2.0":
+  "integrity" "sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg=="
+  "resolved" "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.8.tgz"
+  "version" "4.2.8"
 
 "growly@^1.3.0":
   "integrity" "sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE="
@@ -10077,3 +10079,8 @@
     "which-module" "^2.0.0"
     "y18n" "^3.2.1 || ^4.0.0"
     "yargs-parser" "^10.1.0"
+
+"yarn@^1.22.17":
+  "integrity" "sha512-H0p241BXaH0UN9IeH//RT82tl5PfNraVpSpEoW+ET7lmopNC61eZ+A+IDvU8FM6Go5vx162SncDL8J1ZjRBriQ=="
+  "resolved" "https://registry.npmjs.org/yarn/-/yarn-1.22.17.tgz"
+  "version" "1.22.17"
