@@ -93,16 +93,25 @@ input{
   margin-top: 60px;
 }
 
-#champ{
+#champs{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: auto;
+  flex-wrap: wrap;
+}
+
+.champ{
   display: inline-block;
-  margin-right: 15px;
   margin-bottom: 15px;
-  width: 60px;
+  justify-content: space-between;
+  margin-right: 10px;
+  
 }
 
 .champFreeWeek{
-  width: 60px;
   margin-bottom: 3px;
+  width: 70px;
 }
 
 #nivelInvocadorText{
@@ -114,7 +123,7 @@ input{
   display: inline;
 }
 
-#top{
+#divBusca{
   display: inline-block;
   margin: auto;
   width: 50%;
@@ -136,7 +145,7 @@ input{
     text-align: center;
   }
 
-  #top{
+  #divBusca{
     display: block;
     width: 90%;
   }

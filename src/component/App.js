@@ -220,7 +220,7 @@ export default class App extends React.Component{
 
           <div id="middle">
 
-            <div id="top">
+            <div id="divBusca">
               <span style={{fontSize: 15+"px", fontWeight: "bold", marginBottom: "30px"}}>Nome de invocador</span><br/><br/>
               <input value={this.state.invocador} onChange={(event) => this.handleChange(event)}></input>
               <button onClick={() => this.getDados(this.state.invocador)}>Buscar</button>
@@ -244,33 +244,34 @@ export default class App extends React.Component{
 
             <div id="freeWeek">
             <h2 style={{marginBottom:"30px"}}>Rotação Grátis da Semana</h2>
-                  
-            {(this.state.freeWeek).map((champ, i ) => {
-              let img = "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/" + champ.name + ".png"
-               return(
-                 <div id="champ" key={champ.name}>
 
-                   <img 
-                   className="champFreeWeek"
-                   alt="campeao freeweek" 
-                   src={img}/>
+            <div id="champs">  
 
-                  <br/>
+              {(this.state.freeWeek).map((champ, i ) => {
+                let img = "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/" + champ.name + ".png"
+                
+                return(
+                  <div className="champ" key={champ.name}>
 
-                   <span
-                   style={{
-                     fontSize:"12px",
-                     alignContent: "center",
-                     fontWeight: "bold"
-                   }}
-                   >{champ.name}</span>
-                 </div>
-              )
-            })}
+                    <img 
+                    className="champFreeWeek"
+                    alt="campeao freeweek" 
+                    src={img}/>
+
+                    <br/>
+
+                    <span
+                    style={{
+                      fontSize:"12px",
+                      alignContent: "center",
+                      fontWeight: "bold"
+                    }}
+                    >{champ.name}</span>
+                  </div>
+                )
+              })}
         
-        
-        
-        
+            </div>
         
             </div>
           
