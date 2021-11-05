@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/helpOfLegends/static/css/main.516a48b2.chunk.css",
-    "main.js": "/helpOfLegends/static/js/main.99c950e5.chunk.js",
-    "main.js.map": "/helpOfLegends/static/js/main.99c950e5.chunk.js.map",
+    "main.css": "/helpOfLegends/static/css/main.3ec684fa.chunk.css",
+    "main.js": "/helpOfLegends/static/js/main.1bade463.chunk.js",
+    "main.js.map": "/helpOfLegends/static/js/main.1bade463.chunk.js.map",
     "runtime~main.js": "/helpOfLegends/static/js/runtime~main.22d0bb49.js",
     "runtime~main.js.map": "/helpOfLegends/static/js/runtime~main.22d0bb49.js.map",
-    "static/js/2.0ea305f1.chunk.js": "/helpOfLegends/static/js/2.0ea305f1.chunk.js",
-    "static/js/2.0ea305f1.chunk.js.map": "/helpOfLegends/static/js/2.0ea305f1.chunk.js.map",
+    "static/js/2.b125f698.chunk.js": "/helpOfLegends/static/js/2.b125f698.chunk.js",
+    "static/js/2.b125f698.chunk.js.map": "/helpOfLegends/static/js/2.b125f698.chunk.js.map",
     "index.html": "/helpOfLegends/index.html",
-    "precache-manifest.0435d8dce3def9bf43c9b87e05e5625b.js": "/helpOfLegends/precache-manifest.0435d8dce3def9bf43c9b87e05e5625b.js",
+    "precache-manifest.60676a9044714b616a90a7b45f25439e.js": "/helpOfLegends/precache-manifest.60676a9044714b616a90a7b45f25439e.js",
     "service-worker.js": "/helpOfLegends/service-worker.js",
-    "static/css/main.516a48b2.chunk.css.map": "/helpOfLegends/static/css/main.516a48b2.chunk.css.map"
+    "static/css/main.3ec684fa.chunk.css.map": "/helpOfLegends/static/css/main.3ec684fa.chunk.css.map"
   }
 }
