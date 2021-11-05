@@ -218,7 +218,7 @@ export default class App extends React.Component{
             <h1>{this.state.level}</h1>
           </div>
 
-          <div id="content2">
+          <div id="middle">
 
             <div id="top">
               <span style={{fontSize: 15+"px", fontWeight: "bold", marginBottom: "30px"}}>Nome de invocador</span><br/><br/>
