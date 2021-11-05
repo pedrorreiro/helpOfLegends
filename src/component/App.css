@@ -6,6 +6,23 @@ h3, h2, h1, p, span {
   color: rgb(214, 213, 213);
 }
 
+summary::marker {
+  color: white;
+
+}
+
+summary::after{
+  color: white;
+}
+
+summary{
+  margin-bottom: 30px;
+}
+
+summary:hover{
+  cursor: pointer; 
+}
+
 input{
   width: 100%;
   border-radius: 7px;
@@ -39,6 +56,9 @@ button:hover{
 }
 
 #content{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   width: 75%;
   background-color: #0000008a;
   text-align: center;
@@ -90,7 +110,7 @@ input{
 #freeWeek{
   width: 70%;
   margin: auto;
-  margin-top: 60px;
+  margin-top: 40px;
 }
 
 #champs{
@@ -127,6 +147,18 @@ input{
   display: inline-block;
   margin: auto;
   width: 50%;
+}
+
+.hidden{
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 300ms, opacity 300ms;
+}
+
+.normal{
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0s linear 300ms, opacity 300ms;
 }
 
 @media only screen and (max-width: 1040px) {

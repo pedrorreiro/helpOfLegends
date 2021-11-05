@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import axios from "axios";
 
-const api_key = "RGAPI-7cab5dd9-8d71-410c-8d9c-fe6f8235e646";
+const api_key = "RGAPI-d37ebf6a-5115-4b0b-b36a-5cf0cb418b54";
 
 export default class App extends React.Component{
 
@@ -23,7 +23,8 @@ export default class App extends React.Component{
       champId: "0",
       champLevel: 0,
       champName: "Name",
-      freeWeek: []
+      freeWeek: [],
+      freeWeekVisible: "normal"
       
     }
   }
@@ -243,36 +244,48 @@ export default class App extends React.Component{
             </div>
 
             <div id="freeWeek">
-            <h2 style={{marginBottom:"30px"}}>Rotação Grátis da Semana</h2>
 
-            <div id="champs">  
+              <details open>
+    
+              <summary>
+                <span style={
+                  {
+                    fontSize: "16px",
+                    fontWeight: "bold"
+                  
+                  }}>Rotação Grátis da Semana</span>
+              </summary>
 
-              {(this.state.freeWeek).map((champ, i ) => {
-                let img = "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/" + champ.name + ".png"
-                
-                return(
-                  <div className="champ" key={champ.name}>
+                <div id="champs" className={this.state.freeWeekVisible}>  
 
-                    <img 
-                    className="champFreeWeek"
-                    alt="campeao freeweek" 
-                    src={img}/>
+                  {(this.state.freeWeek).map((champ, i ) => {
+                    let img = "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/" + champ.name + ".png"
+                    
+                    return(
+                      <div className="champ" key={champ.name}>
 
-                    <br/>
+                        <img 
+                        className="champFreeWeek"
+                        alt="campeao freeweek" 
+                        src={img}/>
 
-                    <span
-                    style={{
-                      fontSize:"12px",
-                      alignContent: "center",
-                      fontWeight: "bold"
-                    }}
-                    >{champ.name}</span>
-                  </div>
-                )
-              })}
-        
-            </div>
-        
+                        <br/>
+
+                        <span
+                        style={{
+                          fontSize:"12px",
+                          alignContent: "center",
+                          fontWeight: "bold"
+                        }}
+                        >{champ.name}</span>
+                      </div>
+                    )
+                  })}
+            
+                </div>
+
+            </details>
+
             </div>
           
           </div>
