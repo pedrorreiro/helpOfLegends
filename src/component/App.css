@@ -7,10 +7,13 @@ h3, h2, h1, p, span {
 }
 
 input{
-  width: 75%;
+  width: 100%;
   border-radius: 7px;
   padding: 10px;
   font-size: 15px;
+  margin-bottom: 40px;
+  margin: auto;
+  text-align: center;
 }
 
 button{
@@ -19,6 +22,8 @@ button{
   border-radius: 8px;
   border: none;
   font-weight: bold;
+  margin-top: 20px;
+  
 }
 
 button:hover{
@@ -34,11 +39,15 @@ button:hover{
 }
 
 #content{
-  width: 80%;
+  width: 75%;
   background-color: #0000008a;
   text-align: center;
   border-radius: 9px;
   padding: 20px;
+}
+
+#content2{
+  display: inline-block;
 }
 
 input{
@@ -58,6 +67,12 @@ input{
   width: 100px
 }
 
+#divSummoner{
+  margin-bottom: 30px;
+  margin-top: 20px;
+  text-align: center;
+}
+
 #iconeMaestria{
   width: 50px;
 }
@@ -72,6 +87,24 @@ input{
   width: 130px;
 }
 
+#freeWeek{
+  width: 70%;
+  margin: auto;
+  margin-top: 60px;
+}
+
+#champ{
+  display: inline-block;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  width: 60px;
+}
+
+.champFreeWeek{
+  width: 60px;
+  margin-bottom: 3px;
+}
+
 #nivelInvocadorText{
   font-size: 18px;
 }
@@ -81,36 +114,10 @@ input{
   display: inline;
 }
 
-#divSummoner{
-  margin-right: 30px;
-  float: right;
-}
-
-#left{
+#top{
   display: inline-block;
   margin: auto;
   width: 50%;
-}
-
-@media only screen and (max-width: 1736px) {
-  #content{
-    width: 75%;
-  }
-
-  input{
-    width: 100%;
-    margin-bottom: 40px;
-    margin: auto;
-    text-align: center;
-  }
-
-  button{
-    display: block;
-    margin: auto;
-    margin-top: 20px;
-    padding: 10px 20px;
-}
-
 }
 
 @media only screen and (max-width: 1040px) {
@@ -129,29 +136,17 @@ input{
     text-align: center;
   }
 
-  #left{
+  #top{
     display: block;
     width: 90%;
   }
 
-  button{
-    display: block;
-    margin: auto;
-    margin-top: 20px;
-    padding: 10px 20px;
-  }
-
-  #divSummoner{
-    float: none;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    margin-right: 0;
-    text-align: center;
-    
-  }
-
   #nivelInvocadorText{
     font-size: 17px;
+  }
+
+  #freeWeek{
+    width: 90%;
   }
 }
 
@@ -162,5 +157,9 @@ input{
 
   .component-app{
     padding: 10px 0 10px 0
+  }
+
+  #freeWeek{
+    width: 100%;
   }
 }

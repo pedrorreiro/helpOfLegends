@@ -22,10 +22,15 @@ export default class App extends React.Component{
       qtdMaestria: 0,
       champId: "0",
       champLevel: 0,
-      champName: "Name"
+      champName: "Name",
+      freeWeek: []
       
     }
   }
+
+  componentDidMount() { // quando o DOM é carregado
+    this.freeWeek();
+ }
 
   handleChange = (event) => {
     this.setState({invocador: event.target.value});
@@ -45,30 +50,28 @@ export default class App extends React.Component{
     });
   }
 
-  getCampeao = () => {
+  async getCampeoes (){
 
-    axios.get('https://ddragon.leagueoflegends.com/cdn/11.22.1/data/en_US/champion.json')
+    return await axios.get('https://ddragon.leagueoflegends.com/cdn/11.22.1/data/en_US/champion.json')
     .then((response) => {
 
       const champs = response.data.data;
 
-      for(let c in champs){
+      return champs;
 
-        if(String(champs[c].key) === this.state.champId){
-          this.setState({
-            champName: c,
-            imgCampeao: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/" + c + ".png"
-          })
-          break;
-        };
-      }
     });
 
   }
 
-  async getDados(nome) {
+  getDados(nome) {
+
+    if(!this.state.invocador){
+      this.throwError();
+      return 0;
+    }
+
     try {
-      await axios.get('https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + nome, {
+      axios.get('https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + nome, {
         params: {
           'api_key': api_key
         },
@@ -97,7 +100,12 @@ export default class App extends React.Component{
 
       });
     } catch (e) {
-        console.clear();
+        this.throwError();
+      }
+  }
+
+  throwError(){
+    console.clear();
         this.setState({
           msgErro: "O jogador não existe!",
           estadoDados: "none",
@@ -105,7 +113,20 @@ export default class App extends React.Component{
           imgInvocador: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/0.png"
           
         })
-      }
+  }
+
+  getDadosCampeao = (champId, champs) => {
+
+    for(let c in champs){    
+      if(String(champs[c].key) === champId){
+  
+        return {
+          champName: c,
+          imgCampeao: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/" + c + ".png"
+        }
+        
+      };
+    }
   }
 
   getMaestrias = () => {
@@ -117,7 +138,17 @@ export default class App extends React.Component{
 
       try{
         this.verificaMaiorMaestria(response.data[0]);
-        this.getCampeao();
+
+        this.getCampeoes().then((champs) => {
+          
+          const dados = this.getDadosCampeao(this.state.champId, champs);
+              
+          this.setState({
+            champName: dados.champName,
+            imgCampeao: dados.imgCampeao
+          });
+     
+        });
 
         this.setState({
           estadoDados: "inline-block",
@@ -136,6 +167,46 @@ export default class App extends React.Component{
     });
   }
 
+  freeWeek = () => {
+    axios.get('https://br1.api.riotgames.com/lol/platform/v3/champion-rotations', {
+      params: {
+        'api_key': api_key
+      }
+    }).then((response) => {
+
+      try {
+
+        var freeWeek = [];
+
+        this.getCampeoes().then((allChamps) => {
+          const ids = response.data['freeChampionIds'];
+          const size = ids.length;
+
+          for (let i = 0; i < size; i++) {
+
+            let dadosChamp = this.getDadosCampeao(ids[i].toString(), allChamps);
+
+            let name = dadosChamp.champName;
+
+            freeWeek.push({
+              id: ids[i],
+              name: name
+            })
+
+          }
+
+          this.setState({freeWeek: freeWeek});
+
+        });
+
+      } catch (e) {
+        console.log("erro ao ler freeweek")
+
+      }
+
+    });
+  }
+
   render(){
     return (
       <div className="component-app">
@@ -147,25 +218,62 @@ export default class App extends React.Component{
             <h1>{this.state.level}</h1>
           </div>
 
-          <div id="left">
-            <span style={{fontSize: 15+"px", fontWeight: "bold", marginBottom: "30px"}}>Nome de invocador</span><br/><br/>
-            <input value={this.state.invocador} onChange={(event) => this.handleChange(event)}></input>
-            <button onClick={() => this.getDados(this.state.invocador)}>Buscar</button>
+          <div id="content2">
 
-            <div id="msgErro" style={{display: this.state.msgErroStatus}}>
-              <p id="pErro">{this.state.msgErro}</p>
-            </div>
+            <div id="top">
+              <span style={{fontSize: 15+"px", fontWeight: "bold", marginBottom: "30px"}}>Nome de invocador</span><br/><br/>
+              <input value={this.state.invocador} onChange={(event) => this.handleChange(event)}></input>
+              <button onClick={() => this.getDados(this.state.invocador)}>Buscar</button>
 
-            <div id="divMaestria" style={{display:this.state.estadoDados}}>
-              <h2 style={{marginBottom: "30px"}}>Campeão mais jogado</h2>
-              <h2>{this.state.champName}</h2>
-              <img id="iconeChamp" alt="icone de campeao" src={this.state.imgCampeao}></img>
-              <div id="maestria">
-                <img id="iconeMaestria" alt="maestria" src={this.state.imgMaestria}></img>
-                <h3>Maestria {this.state.champLevel}</h3>
-                <h3 style={{fontWeight:"bold"}}>Pontos {this.state.qtdMaestria}</h3>
+              <div id="msgErro" style={{display: this.state.msgErroStatus}}>
+                <p id="pErro">{this.state.msgErro}</p>
               </div>
+
+              <div id="divMaestria" style={{display:this.state.estadoDados}}>
+                <h2 style={{marginBottom: "30px"}}>Campeão mais jogado</h2>
+                <h2>{this.state.champName}</h2>
+                <img id="iconeChamp" alt="icone de campeao" src={this.state.imgCampeao}></img>
+                <div id="maestria">
+                  <img id="iconeMaestria" alt="maestria" src={this.state.imgMaestria}></img>
+                  <h3>Maestria {this.state.champLevel}</h3>
+                  <h3 style={{fontWeight:"bold"}}>Pontos {this.state.qtdMaestria}</h3>
+                </div>
+              </div>
+
             </div>
+
+            <div id="freeWeek">
+            <h2 style={{marginBottom:"30px"}}>Rotação Grátis da Semana</h2>
+                  
+            {(this.state.freeWeek).map((champ, i ) => {
+              let img = "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/" + champ.name + ".png"
+               return(
+                 <div id="champ" key={champ.name}>
+
+                   <img 
+                   className="champFreeWeek"
+                   alt="campeao freeweek" 
+                   src={img}/>
+
+                  <br/>
+
+                   <span
+                   style={{
+                     fontSize:"12px",
+                     alignContent: "center",
+                     fontWeight: "bold"
+                   }}
+                   >{champ.name}</span>
+                 </div>
+              )
+            })}
+        
+        
+        
+        
+        
+            </div>
+          
           </div>
 
         </div>
