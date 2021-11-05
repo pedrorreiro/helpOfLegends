@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/helpOfLegends/static/css/main.8edf7f73.chunk.css",
-    "main.js": "/helpOfLegends/static/js/main.2666cb28.chunk.js",
-    "main.js.map": "/helpOfLegends/static/js/main.2666cb28.chunk.js.map",
+    "main.css": "/helpOfLegends/static/css/main.a5dde842.chunk.css",
+    "main.js": "/helpOfLegends/static/js/main.2f76314c.chunk.js",
+    "main.js.map": "/helpOfLegends/static/js/main.2f76314c.chunk.js.map",
     "runtime~main.js": "/helpOfLegends/static/js/runtime~main.22d0bb49.js",
     "runtime~main.js.map": "/helpOfLegends/static/js/runtime~main.22d0bb49.js.map",
     "static/js/2.b125f698.chunk.js": "/helpOfLegends/static/js/2.b125f698.chunk.js",
     "static/js/2.b125f698.chunk.js.map": "/helpOfLegends/static/js/2.b125f698.chunk.js.map",
     "index.html": "/helpOfLegends/index.html",
-    "precache-manifest.ef270b2f499fe5160f532bc370c74ff7.js": "/helpOfLegends/precache-manifest.ef270b2f499fe5160f532bc370c74ff7.js",
+    "precache-manifest.78b70e23c1436cc293430e43b1d5b893.js": "/helpOfLegends/precache-manifest.78b70e23c1436cc293430e43b1d5b893.js",
     "service-worker.js": "/helpOfLegends/service-worker.js",
-    "static/css/main.8edf7f73.chunk.css.map": "/helpOfLegends/static/css/main.8edf7f73.chunk.css.map"
+    "static/css/main.a5dde842.chunk.css.map": "/helpOfLegends/static/css/main.a5dde842.chunk.css.map"
   }
 }
