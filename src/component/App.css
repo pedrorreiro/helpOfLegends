@@ -59,11 +59,12 @@ button:hover{
   display: flex;
   justify-content: center;
   flex-direction: column;
-  width: 75%;
+  width: 90%;
   background-color: #0000008a;
   text-align: center;
   border-radius: 9px;
   padding: 20px;
+  
 }
 
 #middle{
@@ -140,13 +141,28 @@ input{
 
 #divMaestria{
   text-align: center;
-  display: inline;
+  justify-content: left;
+  margin-right: 20px;
+  background-color: #0000008a;
+  border-radius: 7px;
+  padding: 20px;
+}
+
+#cont{
+  display: flex;
+  justify-content: space-between;
 }
 
 #divBusca{
-  display: inline-block;
+  display: block;
   margin: auto;
   width: 50%;
+}
+
+#historico{
+  display: inline-flex;
+  width: 80%;
+  align-items: flex-start;
 }
 
 .hidden{
@@ -186,8 +202,17 @@ input{
     font-size: 17px;
   }
 
+  #divMaestria{
+    margin-bottom: 40px;
+  }
+
   #freeWeek{
     width: 90%;
+  }
+
+  #cont{
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -202,5 +227,14 @@ input{
 
   #freeWeek{
     width: 100%;
+  }
+
+  #partida{
+    width: 90%;
+    flex-wrap: wrap;
+  }
+
+  #build{
+    margin-top: 10px;
   }
 }

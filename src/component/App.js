@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import axios from "axios";
+import Historico from "./Historico";
 
 const api_key = "RGAPI-d37ebf6a-5115-4b0b-b36a-5cf0cb418b54";
 
@@ -14,6 +15,7 @@ export default class App extends React.Component{
       msgErroStatus: "block",
       invocador: "Eu cuido do caso",
       invocadorId: "",
+      puuid: "",
       level: "0",
       imgInvocador: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/0.png",
       imgCampeao: "",
@@ -93,7 +95,11 @@ export default class App extends React.Component{
           imgInvocador: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/" +
             response.data.profileIconId + ".png",
 
-          invocadorId: response.data.id
+          invocadorId: response.data.id,
+
+          puuid: response.data.puuid,
+
+          isReady: true
 
         });
 
@@ -152,7 +158,7 @@ export default class App extends React.Component{
         });
 
         this.setState({
-          estadoDados: "inline-block",
+          estadoDados: "flex",
           msgErro: ""
         });
 
@@ -230,17 +236,30 @@ export default class App extends React.Component{
                 <p id="pErro">{this.state.msgErro}</p>
               </div>
 
-              <div id="divMaestria" style={{display:this.state.estadoDados}}>
-                <h2 style={{marginBottom: "30px"}}>Campeão mais jogado</h2>
-                <h2>{this.state.champName}</h2>
-                <img id="iconeChamp" alt="icone de campeao" src={this.state.imgCampeao}></img>
-                <div id="maestria">
-                  <img id="iconeMaestria" alt="maestria" src={this.state.imgMaestria}></img>
-                  <h3>Maestria {this.state.champLevel}</h3>
-                  <h3 style={{fontWeight:"bold"}}>Pontos {this.state.qtdMaestria}</h3>
-                </div>
-              </div>
+            </div>
 
+            <div id="cont">
+              {this.state.isReady && 
+              (
+                <div id="divMaestria">
+                    <h2 style={{marginBottom: "30px"}}>Campeão mais jogado</h2>
+                    <h2>{this.state.champName}</h2>
+                    <img id="iconeChamp" alt="icone de campeao" src={this.state.imgCampeao}></img>
+                    <div id="maestria">
+                      <img id="iconeMaestria" alt="maestria" src={this.state.imgMaestria}></img>
+                      <h3>Maestria {this.state.champLevel}</h3>
+                      <h3 style={{fontWeight:"bold"}}>Pontos {this.state.qtdMaestria}</h3>
+                    </div>
+                  </div>
+              )
+              }
+                
+                {this.state.isReady && (
+                  <div id="historico">
+                  <Historico nomeInvocador={this.state.invocador} puuid={this.state.puuid}></Historico>
+                </div>
+                )}
+              
             </div>
 
             <div id="freeWeek">
