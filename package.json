@@ -1,9 +1,6 @@
 {
   "name": "helpOfLegends",
   "version": "0.1.0",
-  "engines": {
-   "node": "16.13.0"	
-  }
   "license": "MIT",
   "homepage": "http://pedrorreiro.github.io/helpOfLegends",
   "devDependencies": {
