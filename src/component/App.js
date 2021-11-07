@@ -3,7 +3,7 @@ import "./App.css";
 import axios from "axios";
 import Historico from "./Historico";
 
-const api_key = "RGAPI-d37ebf6a-5115-4b0b-b36a-5cf0cb418b54";
+//const api_key = "RGAPI-d37ebf6a-5115-4b0b-b36a-5cf0cb418b54";
 
 export default class App extends React.Component{
 
@@ -76,7 +76,7 @@ export default class App extends React.Component{
     try {
       axios.get('https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + nome, {
         params: {
-          'api_key': api_key
+          'api_key': process.env.api_key
         },
         headers: {
 
@@ -140,7 +140,7 @@ export default class App extends React.Component{
     axios.get('https://br1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/' 
     + this.state.invocadorId,{
       params:{
-        'api_key': api_key
+        'api_key': process.env.api_key
     }}).then((response) => {
 
       try{
@@ -177,7 +177,7 @@ export default class App extends React.Component{
   freeWeek = () => {
     axios.get('https://br1.api.riotgames.com/lol/platform/v3/champion-rotations', {
       params: {
-        'api_key': api_key
+        'api_key': process.env.api_key
       }
     }).then((response) => {
 

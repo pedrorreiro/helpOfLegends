@@ -2,7 +2,7 @@ import React from "react";
 import "./HistoricoFolha.css";
 import axios from "axios";
 
-const api_key = "RGAPI-d37ebf6a-5115-4b0b-b36a-5cf0cb418b54";
+//const api_key = "RGAPI-d37ebf6a-5115-4b0b-b36a-5cf0cb418b54";
 
 export default class Historico extends React.Component{
 
@@ -70,7 +70,7 @@ async getCampeoes (){
     axios.get('https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/' + puuid + '/ids?start=0&count=4' 
     ,{
       params:{
-        'api_key': api_key
+        'api_key': process.env.api_key
     }}).then((response) => {
 
       try{
@@ -95,7 +95,7 @@ async getCampeoes (){
     axios.get('https://americas.api.riotgames.com/lol/match/v5/matches/' + codigo 
     ,{
       params:{
-        'api_key': api_key
+        'api_key': process.env.api_key
     }}).then((response) => {
 
       try{
