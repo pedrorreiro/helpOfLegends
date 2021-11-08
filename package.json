@@ -1,31 +1,28 @@
 {
   "name": "helpOfLegends",
   "version": "0.1.0",
-  "license": "MIT",
-  "homepage": "http://pedrorreiro.github.io/helpOfLegends",
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "gh-pages": "^2.2.0",
-    "prettier": "^1.17.1",
-    "react-scripts": "^3.0.1"
-  },
+  "private": true,
   "dependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
-    "react": "^17.0.1",
-    "react-details": "^1.0.4",
+    "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "yarn": "^1.22.17"
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "prettier": {
-    "trailingComma": "all"
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
