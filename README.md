@@ -16,5 +16,9 @@
 
 ## Como rodar?
 
-Clone o repositório, instale todas as dependências com o comando **npm install** e execute a aplicação com **npm start**.
+Para rodar somente na sua máquina, clone o repositório, instale todas as dependências com o comando **npm install** e execute a aplicação com **npm start**.
+
+Senão, segue o **link da página:**  https://pedrorreiro.github.io/helpOfLegends/
+
+
 
