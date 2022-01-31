@@ -1,7 +1,7 @@
 {
   "name": "helpOfLegends",
   "version": "0.1.0",
-  "homepage": "https://pedrorreiro.github.io/helpOfLegends/",
+  "homepage": "https://pedrorreiro.github.io/",
   "predeploy": "npm run build",
   "deploy": "gh-pages -d build",
   "private": true,
