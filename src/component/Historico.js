@@ -2,7 +2,7 @@ import React from "react";
 import "./HistoricoFolha.css";
 import axios from "axios";
 
-const api_key = "RGAPI-7687ab67-b126-44b2-97f7-1f7efa31d40a";
+const api_key = "RGAPI-4030963e-b90b-4e0b-b5b2-47507c13530a";
 
 export default class Historico extends React.Component{
 
