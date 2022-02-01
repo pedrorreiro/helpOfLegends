@@ -17,7 +17,7 @@
     background-color: #00051b;
     margin: auto;
     margin-bottom: 20px;
-    padding: 20px;
+    padding: 35px 20px;
     border-radius: 10px;
 }
 
@@ -73,7 +73,7 @@
 }
 
 .item{
-    width: 25px;
+    width: 35px;
     border-radius: 7px;
     margin-bottom: 3px;
     margin-left: 3px;

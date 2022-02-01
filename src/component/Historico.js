@@ -2,7 +2,7 @@ import React from "react";
 import "./HistoricoFolha.css";
 import axios from "axios";
 
-const api_key = "RGAPI-4030963e-b90b-4e0b-b5b2-47507c13530a";
+const api_key = "RGAPI-ab79260d-24c3-48ac-a9f9-197d72ea2ded";
 
 export default class Historico extends React.Component{
 
@@ -38,7 +38,7 @@ export default class Historico extends React.Component{
       
       return {
         champName: c,
-        imgCampeao: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/" + c + ".png"
+        imgCampeao: "https://ddragon.leagueoflegends.com/cdn/12.2.1/img/champion/" + c + ".png"
       }
       
     };
@@ -47,7 +47,7 @@ export default class Historico extends React.Component{
 
 async getCampeoes (){
 
-  return await axios.get('https://ddragon.leagueoflegends.com/cdn/11.22.1/data/en_US/champion.json')
+  return await axios.get('http://ddragon.leagueoflegends.com/cdn/12.2.1/data/en_US/champion.json')
   .then((response) => {
 
     const champs = response.data.data;
@@ -172,8 +172,11 @@ async getCampeoes (){
 
                   var cor = "black";
 
-                  if(jogador.win) cor = "green";
-                  else cor = "#ff1a1a";
+                  if(jogador.win) {
+                    cor = "green"}
+
+                  else {
+                    cor = "#ff1a1a"};
 
                   var gameMode = partida.info.gameMode;
 
@@ -205,7 +208,7 @@ async getCampeoes (){
                    // var gamemode = partida.info.gamemode;
                     return(
                         <div id="partida" key={i} style={{backgroundColor: cor}}>
-
+                          
                             <div id="info">
                                 <p id="gameMode">{gameMode}</p>
                             </div>
@@ -224,12 +227,12 @@ async getCampeoes (){
 
                             <div id="frag">
                                 <p style={{fontSize:"13px", fontWeight: "bold"}}>{kills}/{deaths}/{assists}</p>
-                                <p style={{fontWeight: "bold"}}>{conquista}</p>
+                                <p style={{fontSize: "13px",fontWeight: "bold"}}>{conquista}</p>
                             </div>
 
                             <div id="moreInfo">
-                                <p style={{fontSize:"11px", fontWeight: "bold"}}>Nível {jogador.champLevel}</p>
-                                <p style={{fontSize:"11px", fontWeight: "bold"}}>Farm: {farm}</p>
+                                <p style={{fontSize:"14px", fontWeight: "bold"}}>Nível {jogador.champLevel}</p>
+                                <p style={{fontSize:"14px", fontWeight: "bold"}}>Farm: {farm}</p>
                             </div>
 
                             <div id="build">

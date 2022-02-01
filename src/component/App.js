@@ -2,8 +2,9 @@ import React from "react";
 import "./App.css";
 import axios from "axios";
 import Historico from "./Historico";
+import {PlusCircleOutlined} from '@ant-design/icons';
 
-const api_key = "RGAPI-4030963e-b90b-4e0b-b5b2-47507c13530a";
+const api_key = "RGAPI-ab79260d-24c3-48ac-a9f9-197d72ea2ded";
 
 export default class App extends React.Component{
 
@@ -44,7 +45,7 @@ export default class App extends React.Component{
     const { championPoints, championId, championLevel} = champ;
   
     const img = require(`../img/maestrias/m${championLevel}.png`);
-
+    console.log(img);
     this.setState({
       qtdMaestria: championPoints.toLocaleString('en-US'),
       champId: championId.toString(),
@@ -55,7 +56,7 @@ export default class App extends React.Component{
 
   async getCampeoes (){
 
-    return await axios.get('https://ddragon.leagueoflegends.com/cdn/11.22.1/data/en_US/champion.json')
+    return await axios.get('http://ddragon.leagueoflegends.com/cdn/12.2.1/data/en_US/champion.json')
     .then((response) => {
 
       const champs = response.data.data;
@@ -82,17 +83,16 @@ export default class App extends React.Component{
 
       }
       }).then((response) => {
-
         if(response.status === 200){console.log("deu bao")}
-        else console.log("n deu");
+        else this.throwError();
 
-        if (response.status.status_code === 404) console.log("n achou o role");
+        if (response.status.status_code === 404) this.throwError();
 
         this.setState({
 
           level: response.data.summonerLevel,
 
-          imgInvocador: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/" +
+          imgInvocador: "https://ddragon.leagueoflegends.com/cdn/12.2.1/img/profileicon/" +
             response.data.profileIconId + ".png",
 
           invocadorId: response.data.id,
@@ -105,11 +105,14 @@ export default class App extends React.Component{
 
         this.getMaestrias();
 
-      });
-    } catch (e) {
+      }).
+      catch ((e) => {
         this.throwError();
-      }
-  }
+        console.log("EROOOOOo");
+        return 0;
+      });
+  }catch(error){this.throwError()}
+}
 
   throwError(){
     console.clear();
@@ -117,7 +120,7 @@ export default class App extends React.Component{
           msgErro: "O jogador não existe!",
           estadoDados: "none",
           level: 0,
-          imgInvocador: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/0.png"
+          imgInvocador: "https://ddragon.leagueoflegends.com/cdn/12.2.1/img/profileicon/0.png"
           
         })
   }
@@ -129,7 +132,7 @@ export default class App extends React.Component{
   
         return {
           champName: c,
-          imgCampeao: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/" + c + ".png"
+          imgCampeao: "https://ddragon.leagueoflegends.com/cdn/12.2.1/img/champion/" + c + ".png"
         }
         
       };
@@ -167,7 +170,7 @@ export default class App extends React.Component{
         this.setState({
           estadoDados: "none",
           msgErro: "O jogador não possui maestrias",
-          imgInvocador: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/0.png"
+          imgInvocador: "https://ddragon.leagueoflegends.com/cdn/12.2.1/img/profileicon/0.png"
         });
       }
       
@@ -218,9 +221,9 @@ export default class App extends React.Component{
     return (
       <div className="component-app">
         <div id="content">
-        
+
           <div id="divSummoner">
-            <img id="iconeInvocador" alt="icone de invocador" src={this.state.imgInvocador} width="100px"></img>
+            <img id="iconeInvocador" alt="icone de invocador" title="Ícone de Invocador" src={this.state.imgInvocador} width="100px"></img>
             <h3 id="nivelInvocadorText">Nível de invocador</h3>
             <h1>{this.state.level}</h1>
           </div>
@@ -244,7 +247,7 @@ export default class App extends React.Component{
                 <div id="divMaestria">
                     <h2 style={{marginBottom: "30px"}}>Campeão mais jogado</h2>
                     <h2>{this.state.champName}</h2>
-                    <img id="iconeChamp" alt="icone de campeao" src={this.state.imgCampeao}></img>
+                    <img id="iconeChamp" alt="icone de campeao" title="Campeão" src={this.state.imgCampeao}></img>
                     <div id="maestria">
                       <img id="iconeMaestria" alt="maestria" src={this.state.imgMaestria}></img>
                       <h3>Maestria {this.state.champLevel}</h3>
@@ -278,7 +281,7 @@ export default class App extends React.Component{
                 <div id="champs" className={this.state.freeWeekVisible}>  
 
                   {(this.state.freeWeek).map((champ, i ) => {
-                    let img = "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/champion/" + champ.name + ".png"
+                    let img = "https://ddragon.leagueoflegends.com/cdn/12.2.1/img/champion/" + champ.name + ".png"
                     
                     return(
                       <div className="champ" key={champ.name}>
@@ -286,7 +289,8 @@ export default class App extends React.Component{
                         <img 
                         className="champFreeWeek"
                         alt="campeao freeweek" 
-                        src={img}/>
+                        src={img}
+                        title={champ.name}/>
 
                         <br/>
 
