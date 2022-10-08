@@ -4,7 +4,7 @@ import axios from "axios";
 import Historico from "./Historico";
 import {PlusCircleOutlined} from '@ant-design/icons';
 
-const api_key = "RGAPI-2bd9129d-58a4-44e8-a380-9225c154deae";
+const api_key = "RGAPI-5c656b12-3ed0-42c0-80b8-497630c43d2a";
 
 export default class App extends React.Component{
 
