@@ -2,7 +2,7 @@ import React from "react";
 import "./HistoricoFolha.css";
 import axios from "axios";
 
-const api_key = process.env.API_KEY;
+const api_key = process.env.REACT_APP_API_KEY;
 
 export default class Historico extends React.Component{
 
