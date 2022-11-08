@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/helpOfLegends/static/css/main.fb79fb7c.chunk.css",
+    "main.js": "/helpOfLegends/static/js/main.b832864d.chunk.js",
+    "main.js.map": "/helpOfLegends/static/js/main.b832864d.chunk.js.map",
+    "runtime-main.js": "/helpOfLegends/static/js/runtime-main.d7bb9865.js",
+    "runtime-main.js.map": "/helpOfLegends/static/js/runtime-main.d7bb9865.js.map",
+    "static/js/2.0adf1a02.chunk.js": "/helpOfLegends/static/js/2.0adf1a02.chunk.js",
+    "static/js/2.0adf1a02.chunk.js.map": "/helpOfLegends/static/js/2.0adf1a02.chunk.js.map",
+    "index.html": "/helpOfLegends/index.html",
+    "static/css/main.fb79fb7c.chunk.css.map": "/helpOfLegends/static/css/main.fb79fb7c.chunk.css.map",
+    "static/js/2.0adf1a02.chunk.js.LICENSE.txt": "/helpOfLegends/static/js/2.0adf1a02.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d7bb9865.js",
+    "static/js/2.0adf1a02.chunk.js",
+    "static/css/main.fb79fb7c.chunk.css",
+    "static/js/main.b832864d.chunk.js"
+  ]
+}
