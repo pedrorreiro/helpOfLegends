@@ -1,7 +1,7 @@
 {
   "name": "helpOfLegends",
   "version": "0.1.0",
-  "homepage": "https://pedrorreiro.github.io/helpOfLegends/",
+  "homepage": "https://helpoflegends-7e658.firebaseapp.com/",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
