@@ -18,7 +18,7 @@
 
 Para rodar somente na sua máquina, clone o repositório, instale todas as dependências com o comando **npm install** e execute a aplicação com **npm start**.
 
-Senão, segue o **link da página:**  https://pedrorreiro.github.io/helpOfLegends/.
+Senão, segue o **link da página:**  https://helpoflegends.netlify.app/.
 
 A key da API é temporária, pois só usei a aplicação para teste, então as consultas não vão funcionar. Caso quiser ver a aplicação funcionando, favor pedir para eu atualizar.
 
