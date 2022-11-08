@@ -47,7 +47,7 @@ export default class Historico extends React.Component{
 
 async getCampeoes (){
 
-  return await axios.get('http://ddragon.leagueoflegends.com/cdn/12.2.1/data/en_US/champion.json')
+  return await axios.get('https://ddragon.leagueoflegends.com/cdn/12.2.1/data/en_US/champion.json')
   .then((response) => {
 
     const champs = response.data.data;
