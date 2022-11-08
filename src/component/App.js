@@ -1,10 +1,9 @@
 import React from "react";
 import "./App.css";
 import axios from "axios";
-import Historico from "./Historico";
-import {PlusCircleOutlined} from '@ant-design/icons';
+import Historico from "./Historico";  
 
-const api_key = "RGAPI-5c656b12-3ed0-42c0-80b8-497630c43d2a";
+const api_key = "RGAPI-358bb2a2-afea-4842-aa31-699bb3b04fc8";
 
 export default class App extends React.Component{
 
@@ -43,7 +42,7 @@ export default class App extends React.Component{
   verificaMaiorMaestria = (champ) => {
   
     const { championPoints, championId, championLevel} = champ;
-  
+
     const img = require(`../img/maestrias/m${championLevel}.png`);
     console.log(img);
     this.setState({
@@ -105,8 +104,7 @@ export default class App extends React.Component{
 
         this.getMaestrias();
 
-      }).
-      catch ((e) => {
+      }).catch ((e) => {
         this.throwError();
         console.log("EROOOOOo");
         return 0;
