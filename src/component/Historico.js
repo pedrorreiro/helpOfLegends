@@ -174,11 +174,11 @@ export default function Historico(props) {
             var cor = "black";
 
             if (jogador.win) {
-              cor = "green"
+              cor = "#005a00"
             }
 
             else {
-              cor = "#ff1a1a"
+              cor = "rgb(145 0 0)"
             };
 
             var gameMode = partida.info.gameMode;
