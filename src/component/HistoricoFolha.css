@@ -12,10 +12,6 @@
     display: inline-flex;
 }
 
-.part1{
-    
-}
-
 .divPartida{
     display: flex;
     flex-direction: column;
