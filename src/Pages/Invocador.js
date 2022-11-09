@@ -5,8 +5,9 @@ import "../component/App.css";
 import axios from "axios";
 import Historico from "../component/Historico";
 import { getCampeoes, getDadosCampeao } from "../tools";
+import { Spin } from 'antd';
 
-const api_key = process.env.REACT_APP_API_KEY || "RGAPI-358bb2a2-afea-4842-aa31-699bb3b04fc8";
+const api_key = process.env.REACT_APP_API_KEY;
 
 export default function Invocador() {
 
@@ -18,7 +19,8 @@ export default function Invocador() {
   });
 
   const [msgErro, setMsgErro] = useState("");
- 
+  const [loading, setLoading] = useState(false);
+
   const [campeaoMaisJogado, setCampeaoMaisJogado] = useState({
     imgMaestria: require(`../img/maestrias/m1.png`),
   });
@@ -31,12 +33,23 @@ export default function Invocador() {
     getDados(busca);
   }, [busca]);
 
+  const resetInvocador = () => {
+    setInvocador({
+      nome: "",
+      level: "",
+      img: "https://ddragon.leagueoflegends.com/cdn/11.22.1/img/profileicon/0.png",
+      puuid: "",
+    });
+  }
+
   const getDados = (nome) => {
 
     if (!invocador) {
       throwError();
       return 0;
     }
+
+    setLoading(true);
 
     try {
       axios.get('https://br1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + nome, {
@@ -47,27 +60,32 @@ export default function Invocador() {
 
         }
       }).then((response) => {
-        if (response.status === 200) { console.log("deu bao") }
+        if (response.status === 200) {
+
+          setInvocador({
+            nome: response.data.name,
+            level: response.data.summonerLevel,
+            img: "https://ddragon.leagueoflegends.com/cdn/12.2.1/img/profileicon/" + response.data.profileIconId + ".png",
+            puuid: response.data.puuid,
+          })
+
+          getMaestrias(response.data.id);
+
+          setIsReady(true);
+
+        }
         else throwError();
 
         if (response.status.status_code === 404) throwError();
 
-        setInvocador({
-          nome: response.data.name,
-          level: response.data.summonerLevel,
-          img: "https://ddragon.leagueoflegends.com/cdn/12.2.1/img/profileicon/" + response.data.profileIconId + ".png",
-          puuid: response.data.puuid,
-        })
-
-        getMaestrias(response.data.id);
-
-        setIsReady(true);
 
       }).catch((e) => {
         throwError();
         console.log("Erro: " + e);
-      
+
         return 0;
+      }).finally(() => {
+        setLoading(false);
       });
     } catch (error) { throwError() }
   }
@@ -77,15 +95,14 @@ export default function Invocador() {
 
     setMsgErro("Invocador não encontrado");
 
-    setInvocador({
-      ...invocador,
-      level: 0,
-      img: "https://ddragon.leagueoflegends.com/cdn/12.2.1/img/profileicon/0.png",
-    });
+    resetInvocador();
+
+    setIsReady(false);
 
   }
 
   const getMaestrias = async (invocadorId) => {
+
     axios.get('https://br1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/'
       + invocadorId, {
       params: {
@@ -104,7 +121,7 @@ export default function Invocador() {
         const dados = getDadosCampeao(maiorMaestria.championId.toString(), allChamps);
 
         // console.log(dados);
-      
+
         const img = require(`../img/maestrias/m${maiorMaestria.championLevel}.png`);
 
         setCampeaoMaisJogado({
@@ -122,10 +139,7 @@ export default function Invocador() {
 
         setMsgErro("Invocador não possui maestrias");
 
-        setInvocador({
-          ...invocador,
-          img: "https://ddragon.leagueoflegends.com/cdn/12.2.1/img/profileicon/0.png",
-        });
+        resetInvocador();
 
       }
 
@@ -134,46 +148,54 @@ export default function Invocador() {
 
   return (
     <div className="component-app">
-      <div className="content">
 
-        <h1>{invocador.nome}</h1>
+      {loading ? <Spin size="large"/> 
+      :
 
-        <div id="divSummoner">
-          <img id="iconeInvocador" alt="icone de invocador" title="Ícone de Invocador" src={invocador.img} width="100px"></img>
-          <h3 id="nivelInvocadorText">Nível de invocador</h3>
-          <h1>{invocador.level}</h1>
-        </div>
+        <div className="content">
+     
+          <h1>{msgErro !== "" ? msgErro : null}</h1>
+          <h1>{invocador.nome}</h1>
 
-        <div id="middle">
+          <div id="divSummoner">
+            <img id="iconeInvocador" alt="icone de invocador" title="Ícone de Invocador" src={invocador.img} width="100px"></img>
+            <h3 id="nivelInvocadorText">Nível de invocador</h3>
+            <h1>{invocador.level}</h1>
+          </div>
 
-          <div id="cont">
-            {isReady &&
-              (
-                <div id="divMaestria">
-                  <h2 style={{ marginBottom: "30px" }}>Campeão mais jogado</h2>
-                  <h2>{campeaoMaisJogado.name}</h2>
-                  <img id="iconeChamp" alt="icone de campeao" title="Campeão" src={campeaoMaisJogado.img}></img>
-    
-                  <div id="maestria">
-                    <img id="iconeMaestria" alt="maestria" src={campeaoMaisJogado.imgMaestria.default}/>
-                    <h3>Maestria {campeaoMaisJogado.level}</h3>
-                    <h3 style={{ fontWeight: "bold" }}>Pontos {campeaoMaisJogado.maestria}</h3>
+          <div id="middle">
+
+            <div id="cont">
+              {isReady &&
+                (
+                  <div id="divMaestria">
+                    <h2 style={{ marginBottom: "30px" }}>Campeão mais jogado</h2>
+                    <h2>{campeaoMaisJogado.name}</h2>
+                    <img id="iconeChamp" alt="icone de campeao" title="Campeão" src={campeaoMaisJogado.img}></img>
+
+                    <div id="maestria">
+                      <img id="iconeMaestria" alt="maestria" src={campeaoMaisJogado.imgMaestria.default} />
+                      <h3>Maestria {campeaoMaisJogado.level}</h3>
+                      <h3 style={{ fontWeight: "bold" }}>Pontos {campeaoMaisJogado.maestria}</h3>
+                    </div>
                   </div>
-                </div>
-              )
-            }
+                )
+              }
 
-            {isReady && (
-              <div id="historico">
-                <Historico nomeInvocador={invocador.nome} puuid={invocador.puuid}></Historico>
-              </div>
-            )}
+              {isReady && (
+                <div id="historico">
+                  <Historico nomeInvocador={invocador.nome} puuid={invocador.puuid}></Historico>
+                </div>
+              )}
+
+            </div>
 
           </div>
 
         </div>
 
-      </div>
+      }
+
     </div>
   );
 

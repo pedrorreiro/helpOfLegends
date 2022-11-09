@@ -8,20 +8,36 @@
     flex-direction: column;
 }
 
-#partida{
-    position: relative;
-    width: 90%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    background-color: #00051b;
-    margin: auto;
-    margin-bottom: 20px;
-    padding: 35px 20px;
-    border-radius: 10px;
+.part1, .part2{
+    display: inline-flex;
 }
 
-#partida:hover{
+.part1{
+    
+}
+
+.divPartida{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 30px 20px;
+    width: 100%;
+}
+
+.divPartida > p{
+    font-weight: bold;
+}
+
+.partida{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    
+}
+
+.partida:hover{
     cursor: pointer;
 }
 
@@ -33,6 +49,7 @@
 
 #info{
     display: flex;
+    margin-bottom: 15px;
 }
 
 #gameMode{
@@ -79,8 +96,25 @@
     margin-left: 3px;
 }
 
-@media only screen and (max-width: 570px) {
-    #partida{
-        width: 80%;
+@media only screen and (max-width: 1040px) {
+    #root{
+        padding: 40px 5px;
+    }
+
+    .content{
+        padding: 20px 5px;
+    }
+
+    .partida{
+        flex-direction: column;
+    }
+
+    .part2{
+        justify-content: center;
+    }
+
+    #imgChamp{
+        width: 50px;
+        height: 50px;
     }
 }

@@ -4,19 +4,23 @@ import { getDadosCampeao, getCampeoes } from "../tools";
 import "./HistoricoFolha.css";
 import axios from "axios";
 import moment from "moment";
+import { Spin } from 'antd';
 
-const api_key = process.env.REACT_APP_API_KEY || "RGAPI-358bb2a2-afea-4842-aa31-699bb3b04fc8";
+const api_key = process.env.REACT_APP_API_KEY;
 
 export default function Historico(props) {
   const [champs, setChamps] = useState([]);
   const [champsCarregados, setChampsCarregados] = useState(false);
   const [partidas, setPartidas] = useState([]);
   const [partidasCarregadas, setPartidasCarregadas] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   var matchesId = [];
 
   const getPartidas = async (puuid) => {
-   
+
+    setLoading(true);
+
     axios.get('https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/' + puuid + '/ids?start=0&count=7'
       , {
         params: {
@@ -29,7 +33,7 @@ export default function Historico(props) {
           matchesId = response.data;
 
           for (let i = 0; i < matchesId.length; i++) {
-            
+
             getPartida(matchesId[i]);
           }
 
@@ -45,7 +49,7 @@ export default function Historico(props) {
 
     getPartidas(props.puuid);
     getCampeoes().then(champs => {
-     
+
       setChamps(champs);
       setChampsCarregados(true);
 
@@ -96,7 +100,7 @@ export default function Historico(props) {
 
           partida.tempoDiff = tempoPartida(partida.info.gameEndTimestamp);
 
-          var p  = partidas;
+          var p = partidas;
           p.push(partida);
 
           setPartidas(p);
@@ -107,7 +111,8 @@ export default function Historico(props) {
           console.log("erro ao pegar partida")
         }
 
-      });
+      })
+
   }
 
   const getDadosChampPartida = (num) => {
@@ -117,7 +122,7 @@ export default function Historico(props) {
 
     var jogador = participants.filter((jogador) => (jogador.puuid === props.puuid));
 
-    
+
 
     return jogador;
   }
@@ -131,7 +136,7 @@ export default function Historico(props) {
     <div className="content">
       <h2>Histórico</h2>
 
-      {partidasCarregadas && champsCarregados &&
+      {partidasCarregadas && champsCarregados ?
 
         <div id="historico">
 
@@ -147,7 +152,7 @@ export default function Historico(props) {
 
             var jogador = getDadosChampPartida(i);
 
-            if(jogador.length === 0) return; 
+            if (jogador.length === 0) return;
 
             jogador = jogador[0];
             // console.log(jogador);
@@ -177,11 +182,11 @@ export default function Historico(props) {
             };
 
             var gameMode = partida.info.gameMode;
-     
+
             var dados = getDadosCampeao(jogador.championId, champs);
-          
+
             var img = dados.imgCampeao;
-      
+
             var farm = jogador.totalMinionsKilled + jogador.neutralMinionsKilled;
 
             var imgItens = {
@@ -204,54 +209,65 @@ export default function Historico(props) {
 
             // var gamemode = partida.info.gamemode;
             return (
-              <div id="partida" key={i} style={{ backgroundColor: cor }}>
+              <div className="divPartida" key={i} style={{ backgroundColor: cor }}>
 
-                <p>há {partida.tempoDiff}</p>
-
+                <p>Há {partida.tempoDiff}</p>
+                
                 <div id="info">
-                  <p id="gameMode">{gameMode}</p>
-                </div>
+                      <p id="gameMode">{gameMode}</p>
+                    </div>
 
-                <img id="imgChamp" alt="teste" src={img}></img>
+                <div className="partida">
 
-                <div id="spells">
+                  <div className="part1">
 
-                  <img className="spell" alt="spell1"
-                    src="https://opgg-static.akamaized.net/images/lol/spell/SummonerFlash.png?image=c_scale,q_auto,w_22&v=1635906101"></img>
+                    <img id="imgChamp" alt="teste" src={img}></img>
 
-                  <img className="spell" alt="spell2"
-                    src="https://opgg-static.akamaized.net/images/lol/spell/SummonerDot.png?image=c_scale,q_auto,w_22&v=1635906101"></img>
+                    <div id="spells">
 
-                </div>
+                      <img className="spell" alt="spell1"
+                        src="https://opgg-static.akamaized.net/images/lol/spell/SummonerFlash.png?image=c_scale,q_auto,w_22&v=1635906101"></img>
 
-                <div id="frag">
-                  <p style={{ fontSize: "13px", fontWeight: "bold" }}>{kills}/{deaths}/{assists}</p>
-                  <p style={{ fontSize: "13px", fontWeight: "bold" }}>{conquista}</p>
-                </div>
+                      <img className="spell" alt="spell2"
+                        src="https://opgg-static.akamaized.net/images/lol/spell/SummonerDot.png?image=c_scale,q_auto,w_22&v=1635906101"></img>
 
-                <div id="moreInfo">
-                  <p style={{ fontSize: "14px", fontWeight: "bold" }}>Nível {jogador.champLevel}</p>
-                  <p style={{ fontSize: "14px", fontWeight: "bold" }}>Farm: {farm}</p>
-                </div>
+                    </div>
 
-                <div id="build">
-                  <div className="grupo">
-                    <img className="item" alt="item" src={imgItens.item0}></img>
-                    <img className="item" alt="item" src={imgItens.item1}></img>
-                    <img className="item" alt="item" src={imgItens.item2}></img>
+                    <div id="frag">
+                      <p style={{ fontSize: "13px", fontWeight: "bold" }}>{kills}/{deaths}/{assists}</p>
+                      <p style={{ fontSize: "13px", fontWeight: "bold" }}>{conquista}</p>
+                    </div>
+
+                    <div id="moreInfo">
+                      <p style={{ fontSize: "14px", fontWeight: "bold" }}>Nível {jogador.champLevel}</p>
+                      <p style={{ fontSize: "14px", fontWeight: "bold" }}>Farm: {farm}</p>
+                    </div>
                   </div>
+                  <div className="part2">
+                    <div id="build">
+                      <div className="grupo">
+                        <img className="item" alt="item" src={imgItens.item0}></img>
+                        <img className="item" alt="item" src={imgItens.item1}></img>
+                        <img className="item" alt="item" src={imgItens.item2}></img>
+                      </div>
 
-                  <div className="grupo">
-                    <img className="item" alt="item" src={imgItens.item3}></img>
-                    <img className="item" alt="item" src={imgItens.item4}></img>
-                    <img className="item" alt="item" src={imgItens.item5}></img>
+                      <div className="grupo">
+                        <img className="item" alt="item" src={imgItens.item3}></img>
+                        <img className="item" alt="item" src={imgItens.item4}></img>
+                        <img className="item" alt="item" src={imgItens.item5}></img>
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+
+
+
               </div>
             )
           })}
 
-        </div>}
+        </div> : <Spin size="medium" />}
     </div>
   );
 }

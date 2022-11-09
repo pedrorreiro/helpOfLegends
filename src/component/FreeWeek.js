@@ -4,7 +4,7 @@ import { getCampeoes, getDadosCampeao } from "../tools";
 
 export default function FreeWeek(props) {
 
-    const api_key = process.env.REACT_APP_API_KEY || "RGAPI-358bb2a2-afea-4842-aa31-699bb3b04fc8";
+    const api_key = process.env.REACT_APP_API_KEY;
 
     useEffect(() => {
         const getFreeWeek = () => {
