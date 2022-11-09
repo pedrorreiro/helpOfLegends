@@ -55,16 +55,21 @@ button:hover{
   background-color: #00051b;
 }
 
-#content{
+.content{
   display: flex;
   justify-content: center;
   flex-direction: column;
   width: 90%;
+  margin: auto;
   background-color: #0000008a;
   text-align: center;
   border-radius: 9px;
   padding: 20px;
   
+}
+
+#header{
+  margin-top: 40px;
 }
 
 #middle{
