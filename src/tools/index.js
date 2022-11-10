@@ -63,7 +63,7 @@ export const getDadosItem = async (itemId) => {
             description: removeTags(items[i].description),
             price: items[i].gold.total,
             img:
-              `http://ddragon.leagueoflegends.com/cdn/${version}/img/item/` +
+              `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/` +
               itemId +
               ".png",
           };
@@ -71,3 +71,21 @@ export const getDadosItem = async (itemId) => {
       }
     });
 };
+
+export const getMap = async (mapId) => {
+  
+  return axios
+    .get(
+      `https://static.developer.riotgames.com/docs/lol/maps.json`
+    )
+    .then((response) => {
+      const maps = response.data;
+    
+      for (let m in maps) {
+
+        if (String(maps[m].mapId) === String(mapId)) {
+          return maps[m].mapName;
+        }
+      }
+    });
+}

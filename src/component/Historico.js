@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { getDadosCampeao, getCampeoes, getDadosItem } from "../tools";
+import { getDadosCampeao, getCampeoes, getDadosItem, getMap } from "../tools";
 import "./HistoricoFolha.css";
 import axios from "axios";
 import moment from "moment";
@@ -20,7 +20,7 @@ export default function Historico(props) {
       .get(
         "https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/" +
         puuid +
-        "/ids?start=0&count=7",
+        "/ids?start=0&count=10",
         {
           params: {
             api_key: api_key,
@@ -31,8 +31,6 @@ export default function Historico(props) {
         try {
           const matchesId = response.data;
 
-          console.log(matchesId);
-
           const partidas = await Promise.all(
             matchesId.map(async (id) => {
               return await getPartida(id);
@@ -40,7 +38,7 @@ export default function Historico(props) {
           );
 
           setPartidas(partidas);
-
+ 
           setPartidasCarregadas(true);
 
           console.log("Partidas carregadas");
@@ -67,11 +65,11 @@ export default function Historico(props) {
 
         {items.map((item, i) => {
 
-          if(item.name === "") return <div className="item vazio" key={i}></div>
+          if (item.name === "") return <div className="item vazio" key={i}></div>
 
           return (
             <Tooltip title={
-              <div class="item-info">
+              <div className="item-info">
                 <h2>{item.name}</h2>
                 <p>Gold: <strong>{item.price}</strong></p>
                 <p><strong>{item.plaintext}</strong></p>
@@ -99,21 +97,25 @@ export default function Historico(props) {
 
     var atual = new Date();
 
-    const dayDiff = moment(atual).diff(moment(jogo), "days");
-    const horaDif = moment(atual).diff(moment(jogo), "hours");
-    const minDif = moment(atual).diff(moment(jogo), "minutes");
+    // const dayDiff = moment(atual).diff(moment(jogo), "days");
+    // const horaDif = moment(atual).diff(moment(jogo), "hours");
+    // const minDif = moment(atual).diff(moment(jogo), "minutes");
 
-    if (dayDiff > 0) {
-      return dayDiff + " dia(s)";
-    }
+    const dataJogo = moment(jogo).format("DD/MM/YYYY");
 
-    if (horaDif > 0) {
-      return horaDif + " horas(s)";
-    }
+    return dataJogo;
 
-    if (minDif > 0) {
-      return minDif + " minutos(s)";
-    }
+    // if (dayDiff > 0) {
+    //   return dayDiff + " dia(s)";
+    // }
+
+    // if (horaDif > 0) {
+    //   return horaDif + " horas(s)";
+    // }
+
+    // if (minDif > 0) {
+    //   return minDif + " minutos(s)";
+    // }
   };
 
   const getPartida = async (codigo) => {
@@ -136,6 +138,13 @@ export default function Historico(props) {
 
           if (jogador.length === 0) return;
 
+          const gameStartTimestamp = partida.info.gameStartTimestamp;
+          const gameEndTimestamp = partida.info.gameEndTimestamp;
+          const diff = moment(moment(gameEndTimestamp).diff(gameStartTimestamp)).format("mm:ss");
+
+          partida.duration = diff;
+          partida.map = await getMap(partida.info.mapId);
+
           jogador = jogador[0];
 
           var kills = jogador.kills;
@@ -154,9 +163,11 @@ export default function Historico(props) {
           var cor = "black";
 
           if (jogador.win) {
-            cor = "#005a00";
+            jogador.status = "VITÓRIA";
+            cor = "#33b9d3";
           } else {
-            cor = "rgb(145 0 0)";
+            jogador.status = "DERROTA";
+            cor = "#eb0014";
           }
 
           var gameMode = partida.info.gameMode;
@@ -202,6 +213,17 @@ export default function Historico(props) {
           partida.cor = cor;
           partida.gameMode = gameMode;
 
+          switch (gameMode) {
+            case "CLASSIC":
+              partida.gameMode = "Clássico";
+              break;
+            case "ARAM":
+              partida.gameMode = "ARAM";
+              break;
+            case "URF":
+              partida.gameMode = "Ultra Rápido e Furioso";
+          }
+
           return partida;
 
         } catch (e) {
@@ -224,10 +246,14 @@ export default function Historico(props) {
 
   return (
     <div className="content">
-      <h2>Histórico</h2>
 
       {partidasCarregadas && champsCarregados ? (
-        <div id="historico">
+        <div id="partidas"
+          style={{
+            backgroundImage: `url(${props.background})`,
+          }}
+        >
+
           {partidas.map((partida, i) => {
             /* Dados Jogador
 
@@ -242,56 +268,54 @@ export default function Historico(props) {
               <div
                 className="divPartida"
                 key={i}
-                style={{ backgroundColor: partida.cor }}
               >
-                <p>Há {partida.tempoDiff}</p>
-
-                <div id="info">
-                  <p id="gameMode">{partida.gameMode}</p>
-                </div>
 
                 <div className="partida">
                   <div className="part1">
-                    <img
-                      id="imgChamp"
-                      alt="teste"
-                      src={partida.me.imgChamp}
-                    ></img>
 
-                    <div id="spells">
+                    <div className="championAvatar">
                       <img
-                        className="spell"
-                        alt="spell1"
-                        src="https://opgg-static.akamaized.net/images/lol/spell/SummonerFlash.png?image=c_scale,q_auto,w_22&v=1635906101"
+                        id="imgChamp"
+                        alt="teste"
+                        src={partida.me.imgChamp}
                       ></img>
 
-                      <img
-                        className="spell"
-                        alt="spell2"
-                        src="https://opgg-static.akamaized.net/images/lol/spell/SummonerDot.png?image=c_scale,q_auto,w_22&v=1635906101"
-                      ></img>
+                      <span style={{ fontSize: "14px", fontWeight: "bold" }} className="level">
+                        {partida.me.champLevel}
+                      </span>
                     </div>
 
-                    <div id="frag">
-                      <p style={{ fontSize: "13px", fontWeight: "bold" }}>
-                        {partida.me.kills}/{partida.me.deaths}/
-                        {partida.me.assists}
-                      </p>
-                      <p style={{ fontSize: "13px", fontWeight: "bold" }}>
-                        {partida.me.conquista}
-                      </p>
+                    <div className="partida-info">
+
+                      <p className="partida-status" style={{
+                        color: partida.cor
+                      }}>{partida.me.status}</p>
+                      <p>{partida.gameMode}</p>
+
+                      <div id="spells">
+                        <img
+                          className="spell"
+                          alt="spell1"
+                          src="https://opgg-static.akamaized.net/images/lol/spell/SummonerFlash.png?image=c_scale,q_auto,w_22&v=1635906101"
+                        ></img>
+
+                        <img
+                          className="spell"
+                          alt="spell2"
+                          src="https://opgg-static.akamaized.net/images/lol/spell/SummonerDot.png?image=c_scale,q_auto,w_22&v=1635906101"
+                        ></img>
+                      </div>
                     </div>
 
-                    <div id="moreInfo">
-                      <p style={{ fontSize: "14px", fontWeight: "bold" }}>
-                        Nível {partida.me.champLevel}
-                      </p>
-                      <p style={{ fontSize: "14px", fontWeight: "bold" }}>
-                        Farm: {partida.me.farm}
-                      </p>
-                    </div>
                   </div>
                   <div className="part2">
+                    <div id="frag">
+
+                      {/* <p style={{ fontSize: "13px", fontWeight: "bold" }}>
+                        {partida.me.conquista}
+                      </p> */}
+                    </div>
+
                     <div id="build">
                       {
                         renderBuildLine(
@@ -306,6 +330,29 @@ export default function Historico(props) {
                       }
 
                     </div>
+
+                    <div className="info">
+
+                      <span className="frag">
+                        {partida.me.kills}/{partida.me.deaths}/
+                        {partida.me.assists}
+                      </span>
+
+                      <span>
+                        Farm: {partida.me.farm}
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                  <div className="part3">
+                      <p>{partida.map}</p>
+                      <div>
+                        <span>{partida.duration} - {partida.tempoDiff}</span>
+          
+                      </div>
+                      
                   </div>
                 </div>
               </div>

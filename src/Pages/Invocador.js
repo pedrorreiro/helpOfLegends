@@ -182,7 +182,7 @@ export default function Invocador() {
 
               {isReady && (
                 <div id="historico">
-                  <Historico nomeInvocador={invocador.nome} puuid={invocador.puuid}></Historico>
+                  <Historico nomeInvocador={invocador.nome} puuid={invocador.puuid} background={`http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${campeaoMaisJogado.name}_0.jpg`}></Historico>
                 </div>
               )}
 

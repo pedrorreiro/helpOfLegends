@@ -1,3 +1,25 @@
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: rgba(255,255,255, .5) rgba(0, 0, 0, 1);
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255, .5) rgba(0, 0, 0, 1);
+    border-radius: 10px;
+    border: 3px solid rgba(255,255,255, .5);
+  }
+
 body{
     background-color: #00051b;
 }
