@@ -32,16 +32,22 @@
     z-index: -1;
 }
 
+.championAvatar{
+    display: flex;
+}
+
 .part1, .part2{
     display: inline-flex;
 }
 
 .part2{
     flex-direction: column;
+    margin-right: 20px;
 }
 
 .part3{
-    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .part3 p{
@@ -64,9 +70,7 @@
 .partida{
     position: relative;
     display: flex;
-    /* justify-content: center;
-    margin: auto; */
-    max-height: 130px;
+    align-items: flex-start;
     
 }
 
@@ -74,18 +78,23 @@
     border-radius: 100px;
     border: 2px solid rgba(255, 255, 255, 0.5);
     width: 70px;
+    height: 70px;
     margin-left: 10px;
 }
 
 .level{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;
+    width: 32px;
+    height: 32px;
     background-color: rgba(0, 0, 0, .5);
-    padding: 7px;
-    font-size: .8em !important;
+    font-size: .85em !important;
     border-radius: 100px;
     border: 2px solid rgba(255, 251, 0, 0.5);
     position: relative;
-    top: 19px;
+    top: 38px;
     right: 20px;
 }
 
@@ -116,10 +125,6 @@
     height: 35px;
 }
 
-#spells{
-
-}
-
 .ant-tooltip-open{
     background-color: rgba(0, 0, 0, .5);
     color: red !important;
@@ -145,7 +150,7 @@
 }
 
 .partida-status{
-    font-size: 1.4em;
+    font-size: 1.2em;
     font-weight: bold;
     margin: 0;
 }
@@ -188,16 +193,13 @@
         padding: 20px 5px;
     }
 
-    .partida{
-        flex-direction: column;
+    #historico{
+        padding: 0;
     }
 
     .part2{
         justify-content: center;
     }
 
-    #imgChamp{
-        width: 50px;
-        height: 50px;
-    }
+  
 }

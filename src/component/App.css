@@ -1,34 +1,38 @@
 /* ===== Scrollbar CSS ===== */
-  /* Firefox */
-  * {
-    scrollbar-width: auto;
-    scrollbar-color: rgba(255,255,255, .5) rgba(0, 0, 0, 1);
-  }
-
-  /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  *::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: rgba(255,255,255, .5) rgba(0, 0, 0, 1);
-    border-radius: 10px;
-    border: 3px solid rgba(255,255,255, .5);
-  }
-
-body{
-    background-color: #00051b;
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: rgba(255, 255, 255, .5) rgba(0, 0, 0, 1);
 }
 
-#root{
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, .5) rgba(0, 0, 0, 1);
+  border-radius: 10px;
+  border: 3px solid rgba(255, 255, 255, .5);
+}
+
+body {
+  background-color: #00051b;
+}
+
+#root {
   padding: 40px;
 }
 
-h3, h2, h1, p, span {
+h3,
+h2,
+h1,
+p,
+span {
   color: rgb(214, 213, 213);
 }
 
@@ -37,27 +41,28 @@ summary::marker {
 
 }
 
-summary::after{
+summary::after {
   color: white;
 }
 
-summary{
+summary {
   margin-bottom: 30px;
 }
 
-h1{
+h1 {
   font-size: 1.8em;
+  font-weight: bold;
 }
 
-h2{
+h2 {
   font-size: 1.3em;
 }
 
-summary:hover{
-  cursor: pointer; 
+summary:hover {
+  cursor: pointer;
 }
 
-input{
+input {
   width: 100%;
   border-radius: 7px;
   padding: 10px;
@@ -67,17 +72,17 @@ input{
   text-align: center;
 }
 
-button{
+button {
   background-color: white;
   padding: 11px 20px;
   border-radius: 8px;
   border: none;
   font-weight: bold;
   margin-top: 20px;
-  
+
 }
 
-button:hover{
+button:hover {
   cursor: pointer;
 }
 
@@ -88,7 +93,7 @@ button:hover{
   padding: 50px 0 50px 0;
 }
 
-.content{
+.content {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -97,61 +102,62 @@ button:hover{
   text-align: center;
   border-radius: 9px;
   padding: 20px 40px;
-  
+
 }
 
-#header{
+#header {
   margin: auto;
 }
 
-#middle{
+#middle {
   display: inline-block;
 }
 
-input{
+input {
   margin-right: 15px;
   border: none;
   width: 80%;
 }
 
-#pErro{
+#pErro {
   font-size: 18px;
   font-weight: bold;
   color: whiet !important;
 }
 
-#iconeChamp{
+#iconeChamp {
   display: inline-block;
   width: 100px
 }
 
-#divSummoner{
+#divSummoner {
   margin-bottom: 30px;
   margin-top: 20px;
   text-align: center;
 }
 
-#iconeMaestria{
+#iconeMaestria {
   width: 50px;
 }
 
-#maestria{
+#maestria {
   display: inline-block;
-  margin-left: 15px;
+  margin-top: 15px;
 }
 
-#iconeInvocador{
+#iconeInvocador {
   border-radius: 50px;
   width: 130px;
+  margin-bottom: 15px;
 }
 
-#freeWeek{
+#freeWeek {
   width: 70%;
   margin: auto;
   margin-top: 40px;
 }
 
-#champs{
+#champs {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -159,56 +165,59 @@ input{
   flex-wrap: wrap;
 }
 
-.champ{
+.champ {
   display: inline-block;
   margin-bottom: 15px;
   justify-content: space-between;
   margin-right: 10px;
-  
+
 }
 
-.champFreeWeek{
+.champFreeWeek {
   margin-bottom: 3px;
   width: 70px;
 }
 
-#nivelInvocadorText{
+#nivelInvocadorText {
   font-size: 18px;
 }
 
-#divMaestria{
+#divMaestria {
+  display: flex;
   text-align: center;
   justify-content: left;
   margin-right: 20px;
   background-color: #0000008a;
   border-radius: 7px;
   padding: 20px;
+  flex-direction: column;
+  align-items: center;
 }
 
-#cont{
+#cont {
   display: flex;
   justify-content: space-between;
 }
 
-#divBusca{
+#divBusca {
   display: block;
   margin: auto;
   width: 50%;
 }
 
-#historico{
+#historico {
   display: inline-flex;
   width: 80%;
   align-items: flex-start;
 }
 
-.hidden{
+.hidden {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s linear 300ms, opacity 300ms;
 }
 
-.normal{
+.normal {
   visibility: visible;
   opacity: 1;
   transition: visibility 0s linear 300ms, opacity 300ms;
@@ -216,67 +225,68 @@ input{
 
 @media only screen and (max-width: 1040px) {
 
-  h3:first-child{
+  h3:first-child {
     font-size: 20px;
   }
-  .component-app{
+
+  .component-app {
     padding: 30px 0 30px 0;
   }
 
-  input{
+  input {
     width: 90%;
     margin-bottom: 40px;
     margin: auto;
     text-align: center;
   }
 
-  #divBusca{
+  #divBusca {
     display: block;
     width: 90%;
   }
 
-  #nivelInvocadorText{
+  #nivelInvocadorText {
     font-size: 17px;
   }
 
-  #divMaestria{
+  #divMaestria {
     margin-bottom: 40px;
     margin-right: 0;
   }
 
-  #content{
+  #content {
     width: 100%;
   }
 
-  #freeWeek{
+  #freeWeek {
     width: 90%;
   }
 
-  #cont{
+  #cont {
     display: flex;
     flex-direction: column;
   }
 }
 
 @media only screen and (max-width: 570px) {
-  #content{
+  #content {
     width: 82%;
   }
 
-  .component-app{
+  .component-app {
     padding: 10px 0 10px 0
   }
 
-  #freeWeek{
+  #freeWeek {
     width: 100%;
   }
 
-  #partida{
+  #partida {
     width: 90%;
     flex-wrap: wrap;
   }
 
-  #build{
+  #build {
     margin-top: 10px;
   }
 }

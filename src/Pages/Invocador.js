@@ -157,7 +157,7 @@ export default function Invocador() {
 
           <div id="divSummoner">
             <img id="iconeInvocador" alt="icone de invocador" title="Ícone de Invocador" src={invocador.img} width="100px"></img>
-            <h3 id="nivelInvocadorText">Nível de invocador</h3>
+            <h3 id="nivelInvocadorText"><strong>Nível de invocador</strong></h3>
             <h1>{invocador.level}</h1>
           </div>
 
@@ -174,7 +174,7 @@ export default function Invocador() {
                     <div id="maestria">
                       <img id="iconeMaestria" alt="maestria" src={campeaoMaisJogado.imgMaestria.default} />
                       <h3>Maestria {campeaoMaisJogado.level}</h3>
-                      <h3 style={{ fontWeight: "bold" }}>Pontos {campeaoMaisJogado.maestria}</h3>
+                      <h3 style={{ fontWeight: "bold" }}>{campeaoMaisJogado.maestria}</h3>
                     </div>
                   </div>
                 )

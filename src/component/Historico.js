@@ -188,6 +188,7 @@ export default function Historico(props) {
             jogador.item4,
             jogador.item5,
             jogador.item6,
+            jogador.item7
           ];
 
           var items = await Promise.all(
@@ -290,7 +291,7 @@ export default function Historico(props) {
                       <p className="partida-status" style={{
                         color: partida.cor
                       }}>{partida.me.status}</p>
-                      <p>{partida.gameMode}</p>
+                      <p><strong>{partida.gameMode}</strong></p>
 
                       <div id="spells">
                         <img
@@ -325,7 +326,7 @@ export default function Historico(props) {
 
                       {
                         renderBuildLine(
-                          (partida.me.items).slice(3, 6)
+                          (partida.me.items).slice(3, 7)
                         )
                       }
 
