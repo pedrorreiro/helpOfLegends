@@ -118,9 +118,7 @@ export default function Invocador() {
 
         const allChamps = await getCampeoes();
 
-        const dados = getDadosCampeao(maiorMaestria.championId.toString(), allChamps);
-
-        // console.log(dados);
+        const dados = await getDadosCampeao(maiorMaestria.championId.toString(), allChamps);
 
         const img = require(`../img/maestrias/m${maiorMaestria.championLevel}.png`);
 

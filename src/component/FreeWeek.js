@@ -18,13 +18,13 @@ export default function FreeWeek(props) {
       
                 var freeWeek = [];
       
-                getCampeoes().then((allChamps) => {
+                getCampeoes().then(async (allChamps) => {
                   const ids = response.data['freeChampionIds'];
                   const size = ids.length;
       
                   for (let i = 0; i < size; i++) {
       
-                    let dadosChamp = getDadosCampeao(ids[i].toString(), allChamps);
+                    let dadosChamp = await getDadosCampeao(ids[i].toString(), allChamps);
       
                     let name = dadosChamp.champName;
       

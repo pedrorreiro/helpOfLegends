@@ -1,73 +1,107 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { getDadosCampeao, getCampeoes } from "../tools";
+import { getDadosCampeao, getCampeoes, getDadosItem } from "../tools";
 import "./HistoricoFolha.css";
 import axios from "axios";
 import moment from "moment";
-import { Spin } from 'antd';
+import { Spin, Tooltip } from "antd";
 
 const api_key = process.env.REACT_APP_API_KEY;
 
 export default function Historico(props) {
-  const [champs, setChamps] = useState([]);
   const [champsCarregados, setChampsCarregados] = useState(false);
   const [partidas, setPartidas] = useState([]);
   const [partidasCarregadas, setPartidasCarregadas] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  var matchesId = [];
+  var champList = [];
 
   const getPartidas = async (puuid) => {
-
-    setLoading(true);
-
-    axios.get('https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/' + puuid + '/ids?start=0&count=7'
-      , {
-        params: {
-          'api_key': api_key
+    axios
+      .get(
+        "https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/" +
+        puuid +
+        "/ids?start=0&count=7",
+        {
+          params: {
+            api_key: api_key,
+          },
         }
-      }).then((response) => {
-
+      )
+      .then(async (response) => {
         try {
+          const matchesId = response.data;
 
-          matchesId = response.data;
+          console.log(matchesId);
 
-          for (let i = 0; i < matchesId.length; i++) {
+          const partidas = await Promise.all(
+            matchesId.map(async (id) => {
+              return await getPartida(id);
+            })
+          );
 
-            getPartida(matchesId[i]);
-          }
+          setPartidas(partidas);
 
+          setPartidasCarregadas(true);
+
+          console.log("Partidas carregadas");
         } catch (e) {
-          console.log("erro ao pegar partidas")
+          console.log("erro ao pegar partidas");
           console.log(e);
         }
-
       });
-  }
+  };
 
   useEffect(() => {
-
-    getPartidas(props.puuid);
-    getCampeoes().then(champs => {
-
-      setChamps(champs);
+    getCampeoes().then((champs) => {
+      champList = champs;
+      getPartidas(props.puuid);
       setChampsCarregados(true);
-
+      console.log("Campeões carregados");
     });
-
   }, [props.puuid]);
 
+  const renderBuildLine = (items) => {
 
+    return (
+      <div className="grupo">
 
-  const tempoPartida = (timestamp) => { // retorna diferença de tempo do fim da partida até agora
+        {items.map((item, i) => {
+
+          if(item.name === "") return <div className="item vazio" key={i}></div>
+
+          return (
+            <Tooltip title={
+              <div class="item-info">
+                <h2>{item.name}</h2>
+                <p>Gold: <strong>{item.price}</strong></p>
+                <p><strong>{item.plaintext}</strong></p>
+                <p>{item.description}</p>
+              </div>
+
+            }
+            >
+              <img
+                className="item"
+                alt="item"
+                src={item.img}
+              ></img>
+            </Tooltip>
+          );
+        })}
+
+      </div>
+    )
+  };
+
+  const tempoPartida = (timestamp) => {
+    // retorna diferença de tempo do fim da partida até agora
     var jogo = new Date(timestamp);
 
     var atual = new Date();
 
-    const dayDiff = moment(atual).diff(moment(jogo), 'days');
-    const horaDif = moment(atual).diff(moment(jogo), 'hours');
-    const minDif = moment(atual).diff(moment(jogo), 'minutes');
-
+    const dayDiff = moment(atual).diff(moment(jogo), "days");
+    const horaDif = moment(atual).diff(moment(jogo), "hours");
+    const minDif = moment(atual).diff(moment(jogo), "minutes");
 
     if (dayDiff > 0) {
       return dayDiff + " dia(s)";
@@ -80,68 +114,121 @@ export default function Historico(props) {
     if (minDif > 0) {
       return minDif + " minutos(s)";
     }
+  };
 
-  }
-
-  const getPartida = (codigo) => {
-
-    axios.get('https://americas.api.riotgames.com/lol/match/v5/matches/' + codigo
-      , {
-        params: {
-          'api_key': api_key
+  const getPartida = async (codigo) => {
+    return axios
+      .get(
+        "https://americas.api.riotgames.com/lol/match/v5/matches/" + codigo,
+        {
+          params: {
+            api_key: api_key,
+          },
         }
-      }).then((response) => {
-
+      )
+      .then(async (response) => {
         try {
-
           var partida = response.data;
-
-          // console.log(partida);
 
           partida.tempoDiff = tempoPartida(partida.info.gameEndTimestamp);
 
-          var p = partidas;
-          p.push(partida);
+          var jogador = getDadosChampPartida(partida);
 
-          setPartidas(p);
+          if (jogador.length === 0) return;
 
-          if (p.length === matchesId.length) setPartidasCarregadas(true);
+          jogador = jogador[0];
+
+          var kills = jogador.kills;
+          var deaths = jogador.deaths;
+          var assists = jogador.assists;
+
+          var conquista = "";
+
+          if (jogador.pentaKills > 0) conquista = "PentaKill";
+          else if (jogador.quadraKills > 0) conquista = "QuadraKill";
+          else if (jogador.doubleKills > 0) conquista = "DoubleKill";
+          else if (jogador.firstBloodKill) conquista = "FirstBlood";
+          else if (deaths - kills > 4) conquista = "Feeder";
+          else if (kills > 10 && deaths < 2) conquista = "Carry";
+
+          var cor = "black";
+
+          if (jogador.win) {
+            cor = "#005a00";
+          } else {
+            cor = "rgb(145 0 0)";
+          }
+
+          var gameMode = partida.info.gameMode;
+
+          const dados = await getDadosCampeao(jogador.championId, champList);
+
+          var img = dados.imgCampeao;
+
+          var farm = jogador.totalMinionsKilled + jogador.neutralMinionsKilled;
+
+          // var farmPorMinuto = (farm / partida.info.gameDuration) * 60;
+
+          var itensIds = [
+            jogador.item0,
+            jogador.item1,
+            jogador.item2,
+            jogador.item3,
+            jogador.item4,
+            jogador.item5,
+            jogador.item6,
+          ];
+
+          var items = await Promise.all(
+            itensIds.map(async (id) => {
+              return await getDadosItem(id);
+            })
+          );
+
+          items.forEach((item) => {
+            if (item === 0) {
+              item.img = "";
+            }
+          });
+
+          jogador.items = items;
+
+          jogador.imgChamp = img;
+          jogador.farm = farm;
+          jogador.assists = assists;
+          jogador.conquista = conquista;
+
+          partida.me = jogador;
+          partida.cor = cor;
+          partida.gameMode = gameMode;
+
+          return partida;
 
         } catch (e) {
-          console.log("erro ao pegar partida")
+          console.log("erro ao pegar partida");
+          console.log(e);
         }
+      });
+  };
 
-      })
+  const getDadosChampPartida = (partida) => {
+    var p = partida.info;
+    const participants = p.participants;
 
-  }
-
-  const getDadosChampPartida = (num) => {
-
-    var partida = partidas[num].info;
-    var participants = partida.participants;
-
-    var jogador = participants.filter((jogador) => (jogador.puuid === props.puuid));
-
-
+    var jogador = participants.filter(
+      (jogador) => jogador.puuid === props.puuid
+    );
 
     return jogador;
-  }
-
-  const handleChange = (event) => {
-    //this.setState({invocador: event.target.value});
-  }
-
+  };
 
   return (
     <div className="content">
       <h2>Histórico</h2>
 
-      {partidasCarregadas && champsCarregados ?
-
+      {partidasCarregadas && champsCarregados ? (
         <div id="historico">
-
-          {(partidas).map((partida, i) => {
-
+          {partidas.map((partida, i) => {
             /* Dados Jogador
 
             assists, baronKills, champLevel, championId, 
@@ -150,125 +237,84 @@ export default function Historico(props) {
             
             */
 
-            var jogador = getDadosChampPartida(i);
-
-            if (jogador.length === 0) return;
-
-            jogador = jogador[0];
-            // console.log(jogador);
-
-            var kills = jogador.kills;
-            var deaths = jogador.deaths;
-            var assists = jogador.assists;
-
-            var conquista = "";
-
-            if (jogador.pentaKills > 0) conquista = "PentaKill";
-            else if (jogador.quadraKills > 0) conquista = "QuadraKill";
-            else if (jogador.doubleKills > 0) conquista = "DoubleKill";
-            else if (jogador.firstBloodKill) conquista = "FirstBlood";
-            else if (deaths - kills > 4) conquista = "Feeder";
-            else if (kills > 10 && deaths < 2) conquista = "Carry"
-
-
-            var cor = "black";
-
-            if (jogador.win) {
-              cor = "#005a00"
-            }
-
-            else {
-              cor = "rgb(145 0 0)"
-            };
-
-            var gameMode = partida.info.gameMode;
-
-            var dados = getDadosCampeao(jogador.championId, champs);
-
-            var img = dados.imgCampeao;
-
-            var farm = jogador.totalMinionsKilled + jogador.neutralMinionsKilled;
-
-            var imgItens = {
-              item0: "https://opgg-static.akamaized.net/images/lol/item/" + jogador.item0 + ".png?image=q_auto:best&v=1635906101",
-              item1: "https://opgg-static.akamaized.net/images/lol/item/" + jogador.item1 + ".png?image=q_auto:best&v=1635906101",
-              item2: "https://opgg-static.akamaized.net/images/lol/item/" + jogador.item2 + ".png?image=q_auto:best&v=1635906101",
-              item3: "https://opgg-static.akamaized.net/images/lol/item/" + jogador.item3 + ".png?image=q_auto:best&v=1635906101",
-              item4: "https://opgg-static.akamaized.net/images/lol/item/" + jogador.item4 + ".png?image=q_auto:best&v=1635906101",
-              item5: "https://opgg-static.akamaized.net/images/lol/item/" + jogador.item5 + ".png?image=q_auto:best&v=1635906101",
-            }
-
-            for (let i = 0; i < 6; i++) {
-              if (jogador.item0 === 0) imgItens.item0 = ""
-              else if (jogador.item1 === 0) imgItens.item1 = ""
-              else if (jogador.item2 === 0) imgItens.item2 = ""
-              else if (jogador.item3 === 0) imgItens.item3 = ""
-              else if (jogador.item4 === 0) imgItens.item4 = ""
-              else if (jogador.item5 === 0) imgItens.item5 = ""
-            }
-
             // var gamemode = partida.info.gamemode;
             return (
-              <div className="divPartida" key={i} style={{ backgroundColor: cor }}>
-
+              <div
+                className="divPartida"
+                key={i}
+                style={{ backgroundColor: partida.cor }}
+              >
                 <p>Há {partida.tempoDiff}</p>
-                
+
                 <div id="info">
-                      <p id="gameMode">{gameMode}</p>
-                    </div>
+                  <p id="gameMode">{partida.gameMode}</p>
+                </div>
 
                 <div className="partida">
-
                   <div className="part1">
-
-                    <img id="imgChamp" alt="teste" src={img}></img>
+                    <img
+                      id="imgChamp"
+                      alt="teste"
+                      src={partida.me.imgChamp}
+                    ></img>
 
                     <div id="spells">
+                      <img
+                        className="spell"
+                        alt="spell1"
+                        src="https://opgg-static.akamaized.net/images/lol/spell/SummonerFlash.png?image=c_scale,q_auto,w_22&v=1635906101"
+                      ></img>
 
-                      <img className="spell" alt="spell1"
-                        src="https://opgg-static.akamaized.net/images/lol/spell/SummonerFlash.png?image=c_scale,q_auto,w_22&v=1635906101"></img>
-
-                      <img className="spell" alt="spell2"
-                        src="https://opgg-static.akamaized.net/images/lol/spell/SummonerDot.png?image=c_scale,q_auto,w_22&v=1635906101"></img>
-
+                      <img
+                        className="spell"
+                        alt="spell2"
+                        src="https://opgg-static.akamaized.net/images/lol/spell/SummonerDot.png?image=c_scale,q_auto,w_22&v=1635906101"
+                      ></img>
                     </div>
 
                     <div id="frag">
-                      <p style={{ fontSize: "13px", fontWeight: "bold" }}>{kills}/{deaths}/{assists}</p>
-                      <p style={{ fontSize: "13px", fontWeight: "bold" }}>{conquista}</p>
+                      <p style={{ fontSize: "13px", fontWeight: "bold" }}>
+                        {partida.me.kills}/{partida.me.deaths}/
+                        {partida.me.assists}
+                      </p>
+                      <p style={{ fontSize: "13px", fontWeight: "bold" }}>
+                        {partida.me.conquista}
+                      </p>
                     </div>
 
                     <div id="moreInfo">
-                      <p style={{ fontSize: "14px", fontWeight: "bold" }}>Nível {jogador.champLevel}</p>
-                      <p style={{ fontSize: "14px", fontWeight: "bold" }}>Farm: {farm}</p>
+                      <p style={{ fontSize: "14px", fontWeight: "bold" }}>
+                        Nível {partida.me.champLevel}
+                      </p>
+                      <p style={{ fontSize: "14px", fontWeight: "bold" }}>
+                        Farm: {partida.me.farm}
+                      </p>
                     </div>
                   </div>
                   <div className="part2">
                     <div id="build">
-                      <div className="grupo">
-                        <img className="item" alt="item" src={imgItens.item0}></img>
-                        <img className="item" alt="item" src={imgItens.item1}></img>
-                        <img className="item" alt="item" src={imgItens.item2}></img>
-                      </div>
+                      {
+                        renderBuildLine(
+                          (partida.me.items).slice(0, 3)
+                        )
+                      }
 
-                      <div className="grupo">
-                        <img className="item" alt="item" src={imgItens.item3}></img>
-                        <img className="item" alt="item" src={imgItens.item4}></img>
-                        <img className="item" alt="item" src={imgItens.item5}></img>
-                      </div>
+                      {
+                        renderBuildLine(
+                          (partida.me.items).slice(3, 6)
+                        )
+                      }
+
                     </div>
                   </div>
                 </div>
-
-
-
-
               </div>
-            )
+            );
           })}
-
-        </div> : <Spin size="medium" />}
+        </div>
+      ) : (
+        <Spin size="medium" />
+      )}
     </div>
   );
 }
-

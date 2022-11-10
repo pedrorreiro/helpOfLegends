@@ -33,10 +33,6 @@
     
 }
 
-.partida:hover{
-    cursor: pointer;
-}
-
 #imgChamp{
     border-radius: 100px;
     width: 70px;
@@ -52,6 +48,26 @@
     font-weight: bold;
     font-size: 12px;
     margin: auto;
+}
+
+.item-info h2{
+    font-size: 14px;
+    font-weight: bold;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.item-info p{
+    font-size: 12px;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.vazio{
+    border: 1px solid rgb(37, 24, 24);
+    background-color: rgb(0, 0, 0, 0.5);
+    width: 35px;
+    height: 35px;
 }
 
 #spells{
