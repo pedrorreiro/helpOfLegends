@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { getDadosCampeao, getCampeoes, getDadosItem, getMap } from "../tools";
+import { getDadosCampeao, getCampeoes, getDadosItem, getMap, getDadosSummoner } from "../tools";
 import "./HistoricoFolha.css";
 import axios from "axios";
 import moment from "moment";
@@ -37,8 +37,16 @@ export default function Historico(props) {
             })
           );
 
+          // ordernar partida por data
+
+          partidas.sort((a, b) => {
+            return b.info.gameCreation - a.info.gameCreation;
+          });
+
           setPartidas(partidas);
- 
+
+          console.log(partidas);
+
           setPartidasCarregadas(true);
 
           console.log("Partidas carregadas");
@@ -146,6 +154,11 @@ export default function Historico(props) {
           partida.map = await getMap(partida.info.mapId);
 
           jogador = jogador[0];
+
+          jogador.summoners = await Promise.all([
+            getDadosSummoner(jogador.summoner1Id),
+            getDadosSummoner(jogador.summoner2Id),
+          ]);
 
           var kills = jogador.kills;
           var deaths = jogador.deaths;
@@ -294,17 +307,25 @@ export default function Historico(props) {
                       <p><strong>{partida.gameMode}</strong></p>
 
                       <div id="spells">
-                        <img
-                          className="spell"
-                          alt="spell1"
-                          src="https://opgg-static.akamaized.net/images/lol/spell/SummonerFlash.png?image=c_scale,q_auto,w_22&v=1635906101"
-                        ></img>
-
-                        <img
-                          className="spell"
-                          alt="spell2"
-                          src="https://opgg-static.akamaized.net/images/lol/spell/SummonerDot.png?image=c_scale,q_auto,w_22&v=1635906101"
-                        ></img>
+                        {
+                          partida.me.summoners.map((summoner, i) => {
+                            return (
+                              <Tooltip title={
+                                <div>
+                                  <p><strong>{summoner.name}</strong></p>
+                                  <p>{summoner.description}</p>
+                                </div>
+                              }>
+                                <img
+                                  className="summoner-img"
+                                  key={i}
+                                  alt="spell"
+                                  src={summoner.img}
+                                ></img>
+                              </Tooltip>
+                            )
+                          })
+                        }
                       </div>
                     </div>
 
@@ -348,12 +369,12 @@ export default function Historico(props) {
                   </div>
 
                   <div className="part3">
-                      <p>{partida.map}</p>
-                      <div>
-                        <span>{partida.duration} - {partida.tempoDiff}</span>
-          
-                      </div>
-                      
+                    <p>{partida.map}</p>
+                    <div>
+                      <span>{partida.duration} - {partida.tempoDiff}</span>
+
+                    </div>
+
                   </div>
                 </div>
               </div>

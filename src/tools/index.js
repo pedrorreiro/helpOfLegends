@@ -22,6 +22,41 @@ export const getCampeoes = async () => {
     });
 };
 
+export const getChampionDataByName = async (champName) => {
+  const version = await getVersion();
+
+  return await axios
+    .get(
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/champion/${champName}.json`
+    )
+    .then((response) => {
+      const champ = response.data.data[champName];
+
+      // spells
+
+      const spells = champ.spells;
+
+      const spellsData = [];
+
+      spells.forEach((spell) => {
+        spellsData.push({
+          name: spell.name,
+          description: removeTags(spell.description),
+          image: `https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${spell.image.full}`,
+        });
+      });
+
+      const lore = removeTags(champ.lore);
+      const blurb = removeTags(champ.blurb);
+
+      champ.spells = spellsData;
+      champ.lore = lore;
+      champ.blurb = blurb;
+
+      return champ;
+    });
+}
+
 export const getDadosCampeao = async (champId, champs) => {
   const version = await getVersion();
 
@@ -71,6 +106,30 @@ export const getDadosItem = async (itemId) => {
       }
     });
 };
+
+export const getDadosSummoner = async (spellId) => {
+  const version = await getVersion();
+
+  return axios
+    .get(
+      `https://ddragon.leagueoflegends.com/cdn/${version}/data/pt_BR/summoner.json`
+    )
+    .then((response) => {
+      const spells = response.data.data;
+
+      for (let s in spells) {
+        if (String(spells[s].key) === String(spellId)) {
+          return {
+            name: spells[s].name,
+            description: spells[s].description,
+            img:
+              `https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/` +
+              spells[s].image.full,
+          };
+        }
+      }
+    });
+}
 
 export const getMap = async (mapId) => {
   

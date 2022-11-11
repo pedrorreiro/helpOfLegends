@@ -1,0 +1,29 @@
+.spells{
+    display: flex;
+    border: none;
+}
+
+.spell{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border: none !important;
+}
+
+.spell img{
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.champion-details{
+}
+
+.champion-details h3{
+    text-align: center;
+}
+
+.champion-details p{
+    text-align: justify;
+}
